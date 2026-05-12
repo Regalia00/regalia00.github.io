@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site de Thibault</title>
+  <title>Site de Thibault - Page 1</title>
   <style>
     * {
       margin: 0;
@@ -14,9 +14,9 @@
     body {
       min-height: 100vh;
       background:
-        radial-gradient(circle at 20% 20%, rgba(0, 180, 255, 0.18), transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(0, 255, 120, 0.12), transparent 28%),
-        linear-gradient(135deg, #02070d 0%, #050b12 45%, #010308 100%);
+        radial-gradient(circle at 20% 20%, rgba(0, 180, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(0, 255, 120, 0.11), transparent 30%),
+        linear-gradient(135deg, #02070d 0%, #050b12 48%, #010308 100%);
       color: #e8f7ff;
       font-family: "Segoe UI", Arial, sans-serif;
       overflow-x: hidden;
@@ -27,10 +27,10 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0, 180, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 180, 255, 0.06) 1px, transparent 1px);
+        linear-gradient(rgba(0, 180, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 180, 255, 0.055) 1px, transparent 1px);
       background-size: 42px 42px;
-      mask-image: radial-gradient(circle, black 40%, transparent 85%);
+      mask-image: radial-gradient(circle, black 42%, transparent 88%);
       pointer-events: none;
     }
 
@@ -39,266 +39,247 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 24px;
       padding: 32px;
     }
 
-    .panel {
+    .side-nav,
+    .dashboard {
       position: relative;
-      width: min(980px, 100%);
-      min-height: 520px;
-      border: 1px solid rgba(0, 180, 255, 0.75);
       background: rgba(2, 8, 14, 0.82);
-      box-shadow:
-        0 0 28px rgba(0, 180, 255, 0.28),
-        inset 0 0 40px rgba(0, 180, 255, 0.06);
-      clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
-      padding: 34px;
+      border: 1px solid rgba(0, 180, 255, 0.58);
+      box-shadow: 0 0 24px rgba(0, 180, 255, 0.15);
     }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 88px;
-      color: #00b7ff;
-      font-family: Consolas, monospace;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+    .side-nav {
+      width: 260px;
+      min-height: 470px;
+      padding: 26px 24px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
     }
 
-    .tag {
-      border: 1px solid rgba(0, 180, 255, 0.7);
-      padding: 10px 16px;
-      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-      background: rgba(0, 180, 255, 0.06);
-    }
-
-    .content {
-      text-align: center;
-    }
-
-    h1 {
-      font-size: clamp(2.4rem, 8vw, 6.8rem);
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: -2px;
-      color: #ffffff;
-      text-shadow:
-        0 0 10px rgba(0, 180, 255, 0.75),
-        0 0 28px rgba(0, 180, 255, 0.4);
-    }
-
-    h1 span {
-      display: block;
-      color: #00aaff;
-    }
-
-    .subtitle {
-      margin-top: 24px;
-      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-      color: #c8d7df;
-      letter-spacing: 0.5px;
-    }
-
-    .terminal {
-      margin: 24px auto 0;
-      width: min(620px, 100%);
-      text-align: left;
-      border: 1px solid rgba(120, 255, 80, 0.55);
-      background: rgba(0, 0, 0, 0.58);
-      box-shadow: inset 0 0 22px rgba(120, 255, 80, 0.08);
-      border-radius: 8px;
-      padding: 18px 20px;
-      font-family: Consolas, monospace;
-      color: #77ff4f;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 9px;
-      height: 18px;
-      background: #77ff4f;
-      margin-left: 4px;
-      animation: blink 1s infinite;
-      vertical-align: middle;
-    }
-
-    .corner {
-      position: absolute;
-      width: 74px;
-      height: 74px;
-      border-color: #00b7ff;
-      opacity: 0.9;
-    }
-
-    .corner.tl { top: 16px; left: 16px; border-top: 3px solid; border-left: 3px solid; }
-    .corner.br { right: 16px; bottom: 16px; border-right: 3px solid; border-bottom: 3px solid; }
-
-    .footer {
-      position: absolute;
-      bottom: 22px;
-      left: 34px;
-      right: 34px;
-      display: flex;
-      justify-content: space-between;
-      color: #7f8d95;
-      font-family: Consolas, monospace;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 0.9rem;
-    }
-
-    .page-two {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-    }
-
-    .simple-panel {
-      width: min(900px, 100%);
-      border: 1px solid rgba(0, 180, 255, 0.65);
-      background: rgba(2, 8, 14, 0.78);
-      box-shadow: 0 0 24px rgba(0, 180, 255, 0.18);
-      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
-      padding: 32px;
-    }
-
-    .simple-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(0, 180, 255, 0.35);
+    .side-title {
       color: #00b7ff;
       font-family: Consolas, monospace;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 3px;
+      margin-bottom: 28px;
       font-size: 0.95rem;
     }
 
-    .simple-content {
-      padding: 72px 0;
-      text-align: center;
+    .side-link {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      color: #e8f7ff;
+      text-decoration: none;
+      border: 1px solid rgba(0, 180, 255, 0.28);
+      background: rgba(255, 255, 255, 0.025);
+      transition: 0.2s ease;
     }
 
-    .simple-content h2 {
-      font-size: clamp(2rem, 5vw, 4.5rem);
+    .side-link:hover {
+      border-color: #00b7ff;
+      box-shadow: 0 0 18px rgba(0, 180, 255, 0.25);
+      transform: translateX(4px);
+    }
+
+    .side-link span {
+      color: #00b7ff;
+      font-family: Consolas, monospace;
+    }
+
+    .dashboard {
+      width: min(840px, 100%);
+      min-height: 470px;
+      padding: 36px 32px 32px;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      color: #00b7ff;
+      font-family: Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 6vw, 4.4rem);
+      line-height: 0.95;
       text-transform: uppercase;
       color: #ffffff;
-      text-shadow: 0 0 16px rgba(0, 180, 255, 0.55);
-      margin-bottom: 22px;
+      text-shadow:
+        0 0 10px rgba(0, 180, 255, 0.7),
+        0 0 28px rgba(0, 180, 255, 0.35);
     }
 
-    .simple-content p {
-      max-width: 680px;
-      margin: 0 auto;
-      color: #c8d7df;
-      font-size: 1.2rem;
-      line-height: 1.7;
+    .status-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(120, 255, 80, 0.5);
+      color: #7dff58;
+      padding: 14px 18px;
+      font-family: Consolas, monospace;
+      background: rgba(0, 0, 0, 0.38);
+      white-space: nowrap;
     }
 
-    .footer strong {
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #7dff58;
+      box-shadow: 0 0 12px #7dff58;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-card {
+      min-height: 112px;
+      padding: 24px;
+      border: 1px solid rgba(0, 180, 255, 0.32);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .info-card.large {
+      grid-column: span 2;
+    }
+
+    .info-card h2 {
       color: #00b7ff;
-      font-weight: 500;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
     }
 
-    @keyframes blink {
-      0%, 45% { opacity: 1; }
-      46%, 100% { opacity: 0; }
+    .info-card p {
+      color: #d7e6ed;
+      line-height: 1.7;
+      font-size: 1rem;
     }
 
-    @media (max-width: 640px) {
-      .panel {
-        padding: 24px;
-        min-height: 560px;
-      }
+    .terminal-card {
+      border-color: rgba(120, 255, 80, 0.42);
+      background: rgba(0, 0, 0, 0.46);
+      font-family: Consolas, monospace;
+    }
 
-      .top-bar, .footer {
-        font-size: 0.75rem;
-      }
+    .terminal-card p {
+      color: #e8f7ff;
+      line-height: 1.6;
+    }
 
-      .top-bar {
-        margin-bottom: 72px;
+    @media (max-width: 1050px) {
+      .page {
         flex-direction: column;
       }
 
-      .footer {
-        left: 24px;
-        right: 24px;
-        gap: 12px;
+      .side-nav,
+      .dashboard {
+        width: min(840px, 100%);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 20px;
+      }
+
+      .dashboard-header {
         flex-direction: column;
-        text-align: center;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card.large {
+        grid-column: span 1;
       }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <section class="panel">
-      <div class="corner tl"></div>
-      <div class="corner br"></div>
+    <nav class="side-nav" aria-label="Navigation principale">
+      <div class="side-title">Navigation</div>
 
-      <div class="top-bar">
-        <div>Étape 01 sur 01</div>
-        <div class="tag">Thibault / Interface</div>
-      </div>
+      <a class="side-link" href="index.html">
+        <span>01</span>
+        <p>Accueil</p>
+      </a>
 
-      <div class="content">
-        <h1>
-          Ceci est le site
-          <span>de Thibault</span>
-        </h1>
-        <p class="subtitle">Bienvenue dans mon espace numérique.</p>
+      <a class="side-link" href="page2.html">
+        <span>02</span>
+        <p>Page 2</p>
+      </a>
 
-        <div class="terminal">
-          <p>$ systemctl start thibault-site</p>
-          <p>Status : online<span class="cursor"></span></p>
+      <a class="side-link" href="page3.html">
+        <span>03</span>
+        <p>Page 3</p>
+      </a>
+
+      <a class="side-link" href="page4.html">
+        <span>04</span>
+        <p>Page 4</p>
+      </a>
+    </nav>
+
+    <section class="dashboard">
+      <div class="dashboard-header">
+        <div>
+          <p class="eyebrow">Interface système</p>
+          <h1>Page 1 du site web</h1>
+        </div>
+
+        <div class="status-box">
+          <span class="status-dot"></span>
+          <span>Online</span>
         </div>
       </div>
 
-      <div class="footer">
-        <p>Apprenez. Explorez. Testez.</p>
-        <p><strong>Éthique & Responsable</strong></p>
+      <div class="cards-grid">
+        <article class="info-card large">
+          <h2>Bienvenue</h2>
+          <p>
+            Cette page servira d’espace principal pour présenter les projets,
+            outils et ressources du site de Thibault.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h2>Statut</h2>
+          <p>Système opérationnel</p>
+        </article>
+
+        <article class="info-card">
+          <h2>Version</h2>
+          <p>Interface v1.0</p>
+        </article>
+
+        <article class="info-card terminal-card">
+          <p>$ access granted</p>
+          <p>Session initialized...</p>
+        </article>
       </div>
     </section>
-      <section class="page-two">
-      <div class="dashboard-layout">
-        <aside class="side-menu">
-          <div class="menu-title">Navigation</div>
-
-          <div class="menu-item active">
-            <span>01</span>
-            <p>Accueil</p>
-          </div>
-
-          <div class="menu-item">
-            <span>02</span>
-            <p>Projets</p>
-          </div>
-
-          <div class="menu-item">
-            <span>03</span>
-            <p>Cybersécurité</p>
-          </div>
-
-          <div class="menu-item">
-            <span>04</span>
-            <p>Laboratoire</p>
-          </div>
-        </aside>
-
-        <div class="dashboard-main">
-          <div class="dashboard-header">
-            <div>
-              <small>Interface système</small>
-              <h2>Page 1 du site web</h2>
-            </div>
-
-            <div class="status-box">
-              <span
   </main>
-</body>
-</html>
+</bod
