@@ -11,7 +11,8 @@
       box-sizing: border-box;
     }
 
-    
+    body {
+      min-height: 100vh;
       background:
         radial-gradient(circle at 20% 20%, rgba(0, 180, 255, 0.18), transparent 30%),
         radial-gradient(circle at 80% 70%, rgba(0, 255, 120, 0.12), transparent 28%),
@@ -21,7 +22,8 @@
       overflow-x: hidden;
     }
 
-        content: "";
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
       background-image:
@@ -149,7 +151,8 @@
 
     .page-two {
       min-height: 100vh;
-      displalign-items: center;
+      display: flex;
+      align-items: center;
       justify-content: center;
       padding: 32px;
     }
@@ -262,21 +265,40 @@
       </div>
     </section>
       <section class="page-two">
-      <div class="simple-panel">
-        <div class="simple-header">
-          <span>Page 01</span>
-          <span>Site Web de Thibault</span>
-        </div>
+      <div class="dashboard-layout">
+        <aside class="side-menu">
+          <div class="menu-title">Navigation</div>
 
-        <div class="simple-content">
-          <h2>Page 1 du site Web de Thibault</h2>
-          <p>
-            Ceci est une deuxième page au style cyber, plus simple et plus lisible,
-            pensée pour accueillir le futur contenu du site.
-          </p>
-        </div>
-      </div>
-    </section>
+          <div class="menu-item active">
+            <span>01</span>
+            <p>Accueil</p>
+          </div>
+
+          <div class="menu-item">
+            <span>02</span>
+            <p>Projets</p>
+          </div>
+
+          <div class="menu-item">
+            <span>03</span>
+            <p>Cybersécurité</p>
+          </div>
+
+          <div class="menu-item">
+            <span>04</span>
+            <p>Laboratoire</p>
+          </div>
+        </aside>
+
+        <div class="dashboard-main">
+          <div class="dashboard-header">
+            <div>
+              <small>Interface système</small>
+              <h2>Page 1 du site web</h2>
+            </div>
+
+            <div class="status-box">
+              <span
   </main>
 </body>
 </html>
