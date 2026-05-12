@@ -19,7 +19,7 @@
         linear-gradient(135deg, #02070d 0%, #050b12 45%, #010308 100%);
       color: #e8f7ff;
       font-family: "Segoe UI", Arial, sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -53,6 +53,34 @@
         inset 0 0 40px rgba(0, 180, 255, 0.06);
       clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
       padding: 34px;
+    }
+
+    .floating-nav {
+      position: absolute;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 14px;
+      z-index: 5;
+    }
+
+    .floating-nav a {
+      text-decoration: none;
+      color: #00b7ff;
+      border: 1px solid rgba(0, 180, 255, 0.45);
+      background: rgba(0, 0, 0, 0.35);
+      padding: 10px 18px;
+      font-family: Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.2s ease;
+    }
+
+    .floating-nav a:hover {
+      border-color: rgba(0, 180, 255, 0.9);
+      box-shadow: 0 0 18px rgba(0, 180, 255, 0.25);
+      color: #ffffff;
     }
 
     .top-bar {
@@ -149,6 +177,162 @@
       font-size: 0.9rem;
     }
 
+    .page-two {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+    }
+
+    .dashboard-layout {
+      width: min(1200px, 100%);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+    }
+
+    .side-menu,
+    .dashboard-main {
+      background: rgba(2, 8, 14, 0.8);
+      border: 1px solid rgba(0, 180, 255, 0.45);
+      box-shadow: 0 0 20px rgba(0, 180, 255, 0.12);
+    }
+
+    .side-menu {
+      padding: 24px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+
+    .menu-title {
+      color: #00b7ff;
+      text-transform: uppercase;
+      font-family: Consolas, monospace;
+      letter-spacing: 2px;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(0, 180, 255, 0.18);
+      background: rgba(255,255,255,0.02);
+      transition: 0.2s ease;
+    }
+
+    .menu-item.active,
+    .menu-item:hover {
+      border-color: rgba(0, 180, 255, 0.6);
+      box-shadow: 0 0 18px rgba(0, 180, 255, 0.15);
+    }
+
+    .menu-item span {
+      color: #00b7ff;
+      font-family: Consolas, monospace;
+    }
+
+    .menu-item p {
+      color: #d9f6ff;
+    }
+
+    .dashboard-main {
+      padding: 32px;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      gap: 20px;
+    }
+
+    .dashboard-header small {
+      color: #00b7ff;
+      text-transform: uppercase;
+      font-family: Consolas, monospace;
+      letter-spacing: 2px;
+    }
+
+    .dashboard-header h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: white;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-top: 10px;
+      text-shadow: 0 0 14px rgba(0,180,255,0.45);
+    }
+
+    .status-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(120,255,80,0.4);
+      color: #7dff58;
+      padding: 12px 18px;
+      font-family: Consolas, monospace;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #7dff58;
+      box-shadow: 0 0 10px #7dff58;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .info-card {
+      padding: 24px;
+      border: 1px solid rgba(0, 180, 255, 0.25);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .info-card.large {
+      grid-column: span 2;
+    }
+
+    .info-card h3 {
+      color: #00b7ff;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .info-card p {
+      color: #d1dee5;
+      line-height: 1.7;
+    }
+
+    .terminal-card {
+      background: rgba(0,0,0,0.45);
+      border-color: rgba(120,255,80,0.35);
+      color: #7dff58;
+      font-family: Consolas, monospace;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card.large {
+        grid-column: span 1;
+      }
+    }
+
     .footer strong {
       color: #00b7ff;
       font-weight: 500;
@@ -186,9 +370,14 @@
 </head>
 <body>
   <main class="page">
-    <section class="panel">
+    <section class="panel" id="home">
       <div class="corner tl"></div>
       <div class="corner br"></div>
+
+      <nav class="floating-nav">
+        <a href="#home">Accueil</a>
+        <a href="#dashboard">Dashboard</a>
+      </nav>
 
       <div class="top-bar">
         <div>Étape 01 sur 01</div>
@@ -211,6 +400,72 @@
       <div class="footer">
         <p>Apprenez. Explorez. Testez.</p>
         <p><strong>Éthique & Responsable</strong></p>
+      </div>
+    </section>
+      <section class="page-two" id="dashboard">
+      <div class="dashboard-layout">
+        <aside class="side-menu">
+          <div class="menu-title">Navigation</div>
+
+          <div class="menu-item active">
+            <span>01</span>
+            <p>Accueil</p>
+          </div>
+
+          <div class="menu-item">
+            <span>02</span>
+            <p>Projets</p>
+          </div>
+
+          <div class="menu-item">
+            <span>03</span>
+            <p>Cybersécurité</p>
+          </div>
+
+          <div class="menu-item">
+            <span>04</span>
+            <p>Laboratoire</p>
+          </div>
+        </aside>
+
+        <div class="dashboard-main">
+          <div class="dashboard-header">
+            <div>
+              <small>Interface système</small>
+              <h2>Page 1 du site web</h2>
+            </div>
+
+            <div class="status-box">
+              <span class="status-dot"></span>
+              Online
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <div class="info-card large">
+              <h3>Bienvenue</h3>
+              <p>
+                Cette page servira d’espace principal pour présenter les projets,
+                outils et ressources du site de Thibault.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <h3>Statut</h3>
+              <p>Système opérationnel</p>
+            </div>
+
+            <div class="info-card">
+              <h3>Version</h3>
+              <p>Interface v1.0</p>
+            </div>
+
+            <div class="info-card terminal-card">
+              <p>$ access granted</p>
+              <p>Session initialized...</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
