@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page 3 - Théories</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,180,255,0.16), transparent 28%),
+        radial-gradient(circle at 80% 75%, rgba(0,255,120,0.10), transparent 30%),
+        linear-gradient(135deg, #02070d 0%, #050b12 48%, #010308 100%);
+      color: #e8f7ff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,180,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,180,255,0.05) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+
+    .layout {
+      min-height: 100vh;
+      display: flex;
+      gap: 24px;
+      padding: 32px;
+      align-items: flex-start;
+    }
+
+    .sidebar,
+    .content {
+      background: rgba(2,8,14,0.82);
+      border: 1px solid rgba(0,180,255,0.55);
+      box-shadow: 0 0 22px rgba(0,180,255,0.15);
+    }
+
+    .sidebar {
+      width: 260px;
+      padding: 24px;
+      position: sticky;
+      top: 32px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+
+    .sidebar h2 {
+      color: #00b7ff;
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-family: Consolas, monospace;
+    }
+
+    .nav-link {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      margin-bottom: 14px;
+      text-decoration: none;
+      color: #e8f7ff;
+      border: 1px solid rgba(0,180,255,0.25);
+      background: rgba(255,255,255,0.02);
+      transition: 0.2s ease;
+    }
+
+    .nav-link:hover {
+      border-color: #00b7ff;
+      transform: translateX(4px);
+      box-shadow: 0 0 16px rgba(0,180,255,0.2);
+    }
+
+    .nav-link span {
+      color: #00b7ff;
+      font-family: Consolas, monospace;
+    }
+
+    .content {
+      flex: 1;
+      padding: 34px;
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .eyebrow {
+      color: #00b7ff;
+      font-family: Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1;
+      text-transform: uppercase;
+      color: white;
+      text-shadow: 0 0 16px rgba(0,180,255,0.45);
+    }
+
+    .status {
+      border: 1px solid rgba(120,255,80,0.5);
+      color: #7dff58;
+      padding: 14px 18px;
+      background: rgba(0,0,0,0.4);
+      font-family: Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid rgba(0,180,255,0.28);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .card h3 {
+      color: #00b7ff;
+      margin-bottom: 14px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card p,
+    .card li {
+      color: #d7e6ed;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .card ul {
+      margin-left: 18px;
+      margin-top: 8px;
+    }
+
+    .terminal {
+      border-color: rgba(120,255,80,0.35);
+      background: rgba(0,0,0,0.45);
+      font-family: Consolas, monospace;
+    }
+
+    .mini {
+      color: #7f8d95;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 1000px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <aside class="sidebar">
+      <h2>Navigation</h2>
+
+      <a class="nav-link" href="index.html">
+        <span>01</span>
+        <p>Accueil</p>
+      </a>
+
+      <a class="nav-link" href="page1.html">
+        <span>02</span>
+        <p>Page 1</p>
+      </a>
+
+      <a class="nav-link" href="page2.html">
+        <span>03</span>
+        <p>Page 2</p>
+      </a>
+
+      <a class="nav-link" href="page4.html">
+        <span>04</span>
+        <p>Page 4</p>
+      </a>
+    </aside>
+
+    <section class="content">
+      <div class="header">
+        <div>
+          <p class="eyebrow">Infrastructure Web</p>
+          <h1>Théories</h1>
+        </div>
+
+        <div class="status">Documentation active</div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. Domaine & ICANN</h3>
+          <p>
+            Achat d’un domaine personnalisé afin d’obtenir une adresse web professionnelle
+            et masquer l’URL GitHub Pages.
+          </p>
+          <ul>
+            <li>Validation ICANN obligatoire</li>
+            <li>Gestion des extensions (.com, .xyz…)</li>
+            <li>Activation email propriétaire</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>2. Cloudflare & Reverse Proxy</h3>
+          <p>
+            Cloudflare agit comme CDN, WAF, Reverse Proxy et gestionnaire DNS.
+          </p>
+          <ul>
+            <li>Protection DDoS</li>
+            <li>HTTPS automatique</li>
+            <li>Masquage du serveur réel</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>3. DNS & Nameservers</h3>
+          <p>
+            Les DNS traduisent un domaine vers un serveur cible.
+          </p>
+          <ul>
+            <li>Cloudflare devient DNS autoritaire</li>
+            <li>Propagation DNS mondiale</li>
+            <li>Vérification via nslookup</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>4. GitHub Repository</h3>
+          <p>
+            Hébergement du site statique contenant les fichiers HTML/CSS/JS.
+          </p>
+          <ul>
+            <li>Versioning Git</li>
+            <li>Historique du projet</li>
+            <li>Déploiement automatisé</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>5. GitHub Pages</h3>
+          <p>
+            Transformation du repository en site web public.
+          </p>
+          <ul>
+            <li>Déploiement depuis la branche principale</li>
+            <li>Support HTML / CSS / JavaScript</li>
+            <li>Site statique uniquement</li>
+          </ul>
+        </article>
+
+        <article class="card terminal">
+          <h3>6. Pages HTML</h3>
+          <p>Création de pages supplémentaires :</p>
+          <ul>
+            <li>index.html</li>
+            <li>page1.html</li>
+            <li>page2.html</li>
+            <li>page3.html</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>7. DNS CNAME</h3>
+          <p>
+            Création d’un alias DNS reliant le domaine public au site hébergé.
+          </p>
+          <ul>
+            <li>Association domaine → hébergement</li>
+            <li>Configuration Cloudflare DNS</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>8. HTTPS & SSL/TLS</h3>
+          <p>
+            Chiffrement des communications entre le navigateur et le site.
+          </p>
+          <ul>
+            <li>Authentification</li>
+            <li>Intégrité des données</li>
+            <li>Certificats automatiques</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>9. WAF Cloudflare</h3>
+          <p>
+            Pare-feu applicatif protégeant le site contre scans, bots et attaques.
+          </p>
+          <ul>
+            <li>Filtrage HTTP</li>
+            <li>CAPTCHA</li>
+            <li>Blocage pays / URL</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="mini">
+        Les informations sensibles et les URLs privées ont volontairement été masquées.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
