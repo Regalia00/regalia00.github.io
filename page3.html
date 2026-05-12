@@ -226,108 +226,146 @@
         <article class="card">
           <h3>1. Domaine & ICANN</h3>
           <p>
-            Achat d’un domaine personnalisé afin d’obtenir une adresse web professionnelle
-            et masquer l’URL GitHub Pages.
+            L’achat d’un nom de domaine permet d’obtenir une adresse web
+            personnalisée afin de rendre le site plus professionnel et plus facile
+            à retenir.
           </p>
           <ul>
-            <li>Validation ICANN obligatoire</li>
-            <li>Gestion des extensions (.com, .xyz…)</li>
-            <li>Activation email propriétaire</li>
+            <li>Masquage de l’adresse GitHub Pages réelle</li>
+            <li>Compatibilité Cloudflare et HTTPS</li>
+            <li>Image plus professionnelle du site</li>
           </ul>
+          <p class="mini">
+            L’ICANN est l’organisme mondial chargé de la gestion des noms de domaine
+            et impose une validation email du propriétaire.
+          </p>
         </article>
 
         <article class="card">
           <h3>2. Cloudflare & Reverse Proxy</h3>
           <p>
-            Cloudflare agit comme CDN, WAF, Reverse Proxy et gestionnaire DNS.
+            Cloudflare agit comme intermédiaire entre les visiteurs et le serveur
+            hébergeant le site web.
           </p>
           <ul>
-            <li>Protection DDoS</li>
-            <li>HTTPS automatique</li>
-            <li>Masquage du serveur réel</li>
+            <li>Protection contre les attaques DDoS</li>
+            <li>Gestion DNS et HTTPS</li>
+            <li>Mise en cache et accélération du site</li>
           </ul>
+          <p class="mini">
+            Le Reverse Proxy permet de masquer le serveur réel afin de renforcer
+            la sécurité et filtrer le trafic réseau avant qu’il atteigne le site.
+          </p>
         </article>
 
         <article class="card">
           <h3>3. DNS & Nameservers</h3>
           <p>
-            Les DNS traduisent un domaine vers un serveur cible.
+            Les DNS fonctionnent comme l’annuaire d’Internet en traduisant un nom
+            de domaine vers une adresse serveur.
           </p>
           <ul>
-            <li>Cloudflare devient DNS autoritaire</li>
-            <li>Propagation DNS mondiale</li>
-            <li>Vérification via nslookup</li>
+            <li>Cloudflare devient serveur DNS autoritaire</li>
+            <li>Propagation DNS mondiale nécessaire</li>
+            <li>Vérification possible avec nslookup</li>
           </ul>
+          <p class="mini">
+            Lors du changement de Nameservers, tous les serveurs DNS du monde
+            doivent mettre à jour leur cache.
+          </p>
         </article>
 
         <article class="card">
           <h3>4. GitHub Repository</h3>
           <p>
-            Hébergement du site statique contenant les fichiers HTML/CSS/JS.
+            Le repository GitHub contient tous les fichiers du projet ainsi que
+            l’historique complet des modifications.
           </p>
           <ul>
-            <li>Versioning Git</li>
-            <li>Historique du projet</li>
-            <li>Déploiement automatisé</li>
+            <li>Stockage HTML / CSS / JavaScript</li>
+            <li>Sauvegarde centralisée du projet</li>
+            <li>Versioning Git et suivi des changements</li>
           </ul>
+          <p class="mini">
+            Git permet de conserver chaque version du site afin de revenir en arrière
+            si nécessaire.
+          </p>
         </article>
 
         <article class="card">
           <h3>5. GitHub Pages</h3>
           <p>
-            Transformation du repository en site web public.
+            GitHub Pages transforme automatiquement un repository GitHub en site
+            web public accessible sur Internet.
           </p>
           <ul>
-            <li>Déploiement depuis la branche principale</li>
-            <li>Support HTML / CSS / JavaScript</li>
-            <li>Site statique uniquement</li>
+            <li>Déploiement automatique depuis une branche Git</li>
+            <li>Hébergement statique gratuit</li>
+            <li>Compatible HTML, CSS et JavaScript</li>
           </ul>
+          <p class="mini">
+            Un site statique ne possède pas de backend dynamique ni de base de données.
+          </p>
         </article>
 
         <article class="card terminal">
           <h3>6. Pages HTML</h3>
-          <p>Création de pages supplémentaires :</p>
+          <p>
+            Le fichier index.html correspond à la page d’accueil principale du site.
+          </p>
           <ul>
-            <li>index.html</li>
-            <li>page1.html</li>
-            <li>page2.html</li>
-            <li>page3.html</li>
+            <li>Création de plusieurs pages HTML</li>
+            <li>Simulation d’un vrai site web structuré</li>
+            <li>Navigation via différents chemins URL</li>
           </ul>
+          <p class="mini">
+            Chaque page possède sa propre interface et son propre contenu.
+          </p>
         </article>
 
         <article class="card">
           <h3>7. DNS CNAME</h3>
           <p>
-            Création d’un alias DNS reliant le domaine public au site hébergé.
+            Le CNAME permet de relier un domaine personnalisé vers un autre domaine.
           </p>
           <ul>
             <li>Association domaine → hébergement</li>
-            <li>Configuration Cloudflare DNS</li>
+            <li>Configuration réalisée dans Cloudflare DNS</li>
+            <li>Alias DNS simplifiant la redirection</li>
           </ul>
+          <p class="mini">
+            Cette méthode permet d’utiliser un domaine personnalisé avec GitHub Pages.
+          </p>
         </article>
 
         <article class="card">
           <h3>8. HTTPS & SSL/TLS</h3>
           <p>
-            Chiffrement des communications entre le navigateur et le site.
+            HTTPS chiffre les communications entre le navigateur du visiteur et le site.
           </p>
           <ul>
-            <li>Authentification</li>
-            <li>Intégrité des données</li>
-            <li>Certificats automatiques</li>
+            <li>Protection des données réseau</li>
+            <li>Authentification du serveur</li>
+            <li>Prévention de certaines attaques réseau</li>
           </ul>
+          <p class="mini">
+            Les certificats SSL/TLS sont générés automatiquement par Cloudflare et GitHub.
+          </p>
         </article>
 
         <article class="card">
           <h3>9. WAF Cloudflare</h3>
           <p>
-            Pare-feu applicatif protégeant le site contre scans, bots et attaques.
+            Le WAF analyse les requêtes HTTP avant qu’elles atteignent le serveur web.
           </p>
           <ul>
-            <li>Filtrage HTTP</li>
-            <li>CAPTCHA</li>
-            <li>Blocage pays / URL</li>
+            <li>Blocage des bots et scans automatisés</li>
+            <li>Filtrage d’URLs et de requêtes suspectes</li>
+            <li>Possibilité d’imposer des CAPTCHA</li>
           </ul>
+          <p class="mini">
+            Le pare-feu applicatif permet de renforcer la sécurité globale du site.
+          </p>
         </article>
       </div>
 
