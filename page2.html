@@ -304,127 +304,134 @@
 
       <div class="intro">
         <p>
-          Cette section regroupe les projets techniques liés au site de Thibault :
-          création web, cybersécurité, infrastructure, documentation et expérimentation.
-          Chaque projet est présenté comme un module évolutif qui pourra être complété
-          au fur et à mesure de l’avancement.
+          Cette page présente les différents points techniques qui seront étudiés
+          et réalisés dans le laboratoire. Le but principal est surtout de comprendre
+          comment un site web moderne fonctionne réellement derrière son apparence visuelle.
+        </p>
+        <p style="margin-top:14px;">
+          Chaque partie du projet permet d’aborder une notion différente : réseau,
+          sécurité, hébergement, DNS, reverse proxy et protection web.
         </p>
       </div>
 
       <div class="grid">
         <article class="project-card">
-          <h2>Site Web Personnel</h2>
+          <h2>Création du site web</h2>
           <p>
-            Création d’un site statique personnalisé avec une identité visuelle cyber,
-            une navigation claire et plusieurs pages thématiques.
+            Le site sert de base principale au laboratoire. Il permet de mettre en
+            pratique les notions étudiées tout au long du projet.
           </p>
           <ul>
-            <li>Interface HTML / CSS</li>
-            <li>Design responsive</li>
-            <li>Navigation multi-pages</li>
+            <li>Création des pages HTML</li>
+            <li>Organisation de la navigation</li>
+            <li>Compréhension du fonctionnement d’un site statique</li>
           </ul>
           <div class="tag-row">
             <span class="tag">HTML</span>
             <span class="tag">CSS</span>
-            <span class="tag">UI</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h2>Infrastructure Web</h2>
-          <p>
-            Mise en place d’un domaine personnalisé, d’un hébergement statique et
-            d’une couche de protection Cloudflare.
-          </p>
-          <ul>
-            <li>DNS</li>
-            <li>HTTPS</li>
-            <li>Reverse Proxy</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Cloudflare</span>
             <span class="tag">GitHub Pages</span>
           </div>
         </article>
 
         <article class="project-card">
-          <h2>Documentation Technique</h2>
+          <h2>Achat d’un nom de domaine</h2>
           <p>
-            Rédaction de fiches explicatives pour comprendre les choix techniques,
-            les protocoles utilisés et le fonctionnement global du projet.
+            L’achat d’un domaine permet d’obtenir une adresse web plus professionnelle
+            et plus simple à retenir qu’une adresse technique GitHub.
           </p>
           <ul>
-            <li>Théorie réseau</li>
-            <li>Sécurité web</li>
-            <li>Procédures claires</li>
+            <li>Comprendre le rôle des domaines Internet</li>
+            <li>Découvrir l’ICANN et la gestion DNS</li>
+            <li>Associer un domaine à un site web</li>
           </ul>
           <div class="tag-row">
-            <span class="tag">Docs</span>
-            <span class="tag">Méthode</span>
+            <span class="tag">DNS</span>
+            <span class="tag">ICANN</span>
           </div>
         </article>
 
         <article class="project-card">
-          <h2>Module Cybersécurité</h2>
+          <h2>Cloudflare & Protection Web</h2>
           <p>
-            Future zone dédiée aux tests contrôlés, bonnes pratiques, outils défensifs
-            et concepts liés à la sécurité informatique.
+            Cloudflare est utilisé pour comprendre comment un service peut protéger
+            un site web tout en améliorant sa gestion réseau.
           </p>
           <ul>
-            <li>WAF</li>
-            <li>Analyse réseau</li>
-            <li>Hygiène numérique</li>
+            <li>Protection HTTPS</li>
+            <li>Gestion DNS centralisée</li>
+            <li>Découverte du WAF et du filtrage</li>
           </ul>
           <div class="tag-row">
-            <span class="tag">Cyber</span>
-            <span class="tag">Sécurité</span>
+            <span class="tag">Cloudflare</span>
+            <span class="tag">WAF</span>
           </div>
         </article>
 
         <article class="project-card">
-          <h2>Laboratoire Web</h2>
+          <h2>Proxy & Reverse Proxy</h2>
           <p>
-            Espace prévu pour tester de nouvelles interfaces, animations, composants
-            visuels et améliorations du site.
+            Cette partie du projet permet de comprendre comment le trafic réseau
+            peut passer par un intermédiaire avant d’atteindre le serveur réel.
           </p>
           <ul>
-            <li>Tests UI</li>
-            <li>Animations</li>
-            <li>Optimisation responsive</li>
+            <li>Comprendre le rôle d’un proxy</li>
+            <li>Découvrir le fonctionnement d’un reverse proxy</li>
+            <li>Observer la circulation du trafic web</li>
           </ul>
           <div class="tag-row">
-            <span class="tag">Lab</span>
-            <span class="tag">Front-end</span>
+            <span class="tag">Reverse Proxy</span>
+            <span class="tag">Réseau</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h2>Compréhension des DNS</h2>
+          <p>
+            Les DNS sont une partie essentielle du projet car ils permettent de faire
+            le lien entre un nom de domaine et le serveur qui héberge réellement le site.
+          </p>
+          <ul>
+            <li>Propagation DNS</li>
+            <li>Nameservers</li>
+            <li>Enregistrements CNAME</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">DNS</span>
+            <span class="tag">Cloud</span>
           </div>
         </article>
 
         <article class="project-card terminal-card">
-          <h2>Journal de bord</h2>
-          <p>$ project status --all</p>
-          <p>Site web : en développement</p>
-          <p>Documentation : en cours</p>
-          <p>Sécurité : planifiée</p>
+          <h2>Finalité du projet</h2>
+          <p>
+            Le but final du laboratoire est surtout de mieux comprendre le fonctionnement
+            global d’une infrastructure web moderne.
+          </p>
+          <p>
+            Ce projet permet de relier la théorie avec la pratique en observant concrètement
+            comment les différents services communiquent entre eux sur Internet.
+          </p>
         </article>
       </div>
 
       <section class="roadmap">
-        <h2>Roadmap</h2>
+        <h2>Ce que le projet permet de comprendre</h2>
         <div class="steps">
           <div class="step">
-            <strong>01 / Structure</strong>
-            <p>Créer les pages principales et organiser la navigation.</p>
+            <strong>01 / Réseau</strong>
+            <p>Comprendre comment les requêtes circulent entre le navigateur et le serveur.</p>
           </div>
           <div class="step">
-            <strong>02 / Contenu</strong>
-            <p>Ajouter les textes, fiches, projets et explications techniques.</p>
+            <strong>02 / DNS</strong>
+            <p>Découvrir le rôle des domaines, des nameservers et de la propagation DNS.</p>
           </div>
           <div class="step">
-            <strong>03 / Sécurité</strong>
-            <p>Documenter Cloudflare, HTTPS, WAF et bonnes pratiques.</p>
+            <strong>03 / Protection</strong>
+            <p>Observer comment Cloudflare protège un site grâce au reverse proxy et au WAF.</p>
           </div>
           <div class="step">
-            <strong>04 / Amélioration</strong>
-            <p>Optimiser l’affichage mobile et enrichir le design visuel.</p>
+            <strong>04 / Hébergement</strong>
+            <p>Comprendre comment GitHub Pages publie un site statique sur Internet.</p>
           </div>
         </div>
       </section>
