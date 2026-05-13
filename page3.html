@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page 2 - Projets</title>
+  <title>Théorie</title>
   <style>
     * {
       margin: 0;
@@ -49,7 +49,7 @@
     }
 
     .sidebar {
-      width: 260px;
+      width: 280px;
       padding: 24px;
       position: sticky;
       top: 32px;
@@ -78,15 +78,18 @@
       transition: 0.2s ease;
     }
 
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link.active {
       border-color: #00b7ff;
       transform: translateX(4px);
       box-shadow: 0 0 16px rgba(0,180,255,0.2);
+      background: rgba(0,180,255,0.07);
     }
 
     .nav-link span {
       color: #00b7ff;
       font-family: Consolas, monospace;
+      min-width: 26px;
     }
 
     .content {
@@ -100,7 +103,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 20px;
-      margin-bottom: 34px;
+      margin-bottom: 30px;
     }
 
     .eyebrow {
@@ -113,7 +116,7 @@
     }
 
     h1 {
-      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      font-size: clamp(2.5rem, 5vw, 4.6rem);
       line-height: 1;
       text-transform: uppercase;
       color: white;
@@ -133,94 +136,111 @@
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
       padding: 24px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .intro p {
       color: #d7e6ed;
       line-height: 1.7;
+      margin-bottom: 10px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 18px;
     }
 
-    .project-card {
+    .theory-card {
       position: relative;
-      min-height: 230px;
       padding: 22px;
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
-      overflow: hidden;
+      min-height: 220px;
     }
 
-    .project-card::before {
+    .theory-card::before {
       content: "";
       position: absolute;
-      top: 0;
       left: 0;
+      top: 0;
       width: 4px;
       height: 100%;
       background: linear-gradient(#00b7ff, #7dff58);
-      opacity: 0.75;
+      opacity: 0.8;
     }
 
-    .project-card h2 {
+    .theory-card.large {
+      grid-column: span 2;
+    }
+
+    .theory-card h2 {
       color: #00b7ff;
       font-size: 1.05rem;
       text-transform: uppercase;
       letter-spacing: 1.4px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .project-card p,
-    .project-card li {
+    .theory-card p,
+    .theory-card li,
+    .theory-card td,
+    .theory-card th {
       color: #d7e6ed;
-      line-height: 1.6;
-      font-size: 0.95rem;
+      line-height: 1.65;
+      font-size: 0.96rem;
     }
 
-    .project-card ul {
+    .theory-card ul {
       margin-left: 18px;
       margin-top: 10px;
     }
 
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: rgba(0,0,0,0.22);
     }
 
-    .tag {
-      color: #7dff58;
-      border: 1px solid rgba(120,255,80,0.35);
-      background: rgba(0,0,0,0.32);
-      padding: 6px 10px;
+    th,
+    td {
+      border: 1px solid rgba(0,180,255,0.23);
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #00b7ff !important;
+      text-align: left;
       font-family: Consolas, monospace;
-      font-size: 0.78rem;
+      font-weight: 500;
     }
 
-    .terminal-card {
+    .terminal {
       border-color: rgba(120,255,80,0.38);
       background: rgba(0,0,0,0.45);
       font-family: Consolas, monospace;
     }
 
-    .terminal-card h2 {
+    .terminal h2 {
       color: #7dff58;
     }
 
-    .roadmap {
+    .mini {
+      color: #8fa3ad !important;
+      font-size: 0.9rem !important;
+      margin-top: 10px;
+    }
+
+    .summary {
       margin-top: 22px;
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
       padding: 24px;
     }
 
-    .roadmap h2 {
+    .summary h2 {
       color: #00b7ff;
       text-transform: uppercase;
       letter-spacing: 1.4px;
@@ -228,26 +248,27 @@
       font-size: 1rem;
     }
 
-    .steps {
+    .flow {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 14px;
     }
 
-    .step {
+    .flow-step {
       border: 1px solid rgba(0,180,255,0.22);
       padding: 16px;
       background: rgba(0,0,0,0.24);
+      text-align: center;
     }
 
-    .step strong {
+    .flow-step strong {
       display: block;
       color: #7dff58;
       margin-bottom: 8px;
       font-family: Consolas, monospace;
     }
 
-    .step p {
+    .flow-step p {
       color: #d7e6ed;
       line-height: 1.5;
       font-size: 0.92rem;
@@ -263,6 +284,10 @@
         position: relative;
         top: 0;
       }
+
+      .theory-card.large {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
@@ -272,244 +297,221 @@
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>01</span>
+        <span>00</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link" href="page1.html">
-        <span>03</span>
+        <span>01</span>
+        <p>Labo Cloud Reverse Proxy</p>
+      </a>
+
+      <a class="nav-link" href="page2.html">
+        <span>02</span>
         <p>Projet</p>
       </a>
 
-      <a class="nav-link" href="page3.html">
-        <span>04</span>
-        <p>Théories</p>
+      <a class="nav-link active" href="page3.html">
+        <span>03</span>
+        <p>Théorie</p>
       </a>
 
       <a class="nav-link" href="page4.html">
-        <span>05</span>
-        <p>Documentation</p>
+        <span>04</span>
+        <p>Notes techniques</p>
       </a>
     </aside>
 
     <section class="content">
       <div class="header">
         <div>
-          <p class="eyebrow">Portfolio technique</p>
-          <h1>Projets</h1>
+          <p class="eyebrow">Compréhension réseau & sécurité</p>
+          <h1>Théorie</h1>
         </div>
 
-        <div class="status">Build actif</div>
+        <div class="status">Notes essentielles</div>
       </div>
 
       <div class="intro">
         <p>
-          Cette page présente les différents points techniques qui seront étudiés
-          et réalisés dans le laboratoire. Le but principal est surtout de comprendre
-          comment un site web moderne fonctionne réellement derrière son apparence visuelle.
+          Cette page rassemble les notions théoriques importantes du laboratoire, sans refaire
+          toutes les étapes pratiques. L’objectif est de garder les idées principales : ce que fait
+          Cloudflare, ce qu’est un reverse proxy, pourquoi le DNS est important et comment le WAF
+          peut contrôler l’accès au site.
         </p>
-        <p style="margin-top:14px;">
-          Chaque partie du projet permet d’aborder une notion différente : réseau,
-          sécurité, hébergement, DNS, reverse proxy et protection web.
+        <p>
+          Je présente ces notions avec des explications simples, comme une fiche de révision pour
+          comprendre le fonctionnement global du labo.
         </p>
       </div>
 
       <div class="grid">
-        <article class="card large">
-          <h3>Le rôle du WAF Cloudflare</h3>
+        <article class="theory-card large">
+          <h2>01 / Reverse Proxy</h2>
           <p>
-            Le WAF permet de filtrer le trafic web avant qu’il atteigne réellement le site.
-            Cette partie du laboratoire sert surtout à comprendre comment les requêtes web
-            peuvent être analysées, autorisées ou bloquées.
+            Un reverse proxy est un serveur placé devant le serveur réel. Le visiteur ne contacte
+            donc pas directement l’hébergement du site : il passe d’abord par une couche intermédiaire.
           </p>
+          <p>
+            Dans ce labo, Cloudflare joue ce rôle. Cela permet de protéger le site, cacher une partie
+            de l’infrastructure et appliquer des règles avant que la requête atteigne GitHub Pages.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>02 / DNS</h2>
+          <p>
+            Le DNS permet de transformer un nom de domaine lisible en destination technique.
+            Sans DNS, il faudrait retenir des adresses beaucoup moins pratiques.
+          </p>
+          <p>
+            En changeant les nameservers, on indique que Cloudflare devient responsable de la zone DNS
+            du domaine.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>03 / Proxy Status</h2>
+          <table>
+            <tr>
+              <th>État</th>
+              <th>Compréhension</th>
+            </tr>
+            <tr>
+              <td>Nuage orange</td>
+              <td>Cloudflare agit comme proxy et protège le trafic.</td>
+            </tr>
+            <tr>
+              <td>Nuage gris</td>
+              <td>Cloudflare gère seulement le DNS, sans filtrer le trafic web.</td>
+            </tr>
+          </table>
           <p class="mini">
-            Cloudflare fonctionne avec une logique simple :
-            SI une condition est vraie → ALORS appliquer une action.
+            Le nuage orange est donc le mode important pour profiter du reverse proxy.
           </p>
         </article>
 
-        <article class="card">
-          <h3>Règles importantes du Firewall</h3>
-          <table style="width:100%;border-collapse:collapse;margin-top:10px;">
-            <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">URI Path</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Filtrer une page précise</td>
-            </tr>
-            <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">User-Agent</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Détecter bots et scanners</td>
-            </tr>
-            <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">IP Source</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Autoriser ou bloquer une IP</td>
-            </tr>
-            <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">Country</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Filtrer selon le pays</td>
-            </tr>
-          </table>
-        </article>
-
-        <article class="card">
-          <h3>Rate Limiting</h3>
+        <article class="theory-card">
+          <h2>04 / HTTPS & SSL/TLS</h2>
           <p>
-            Le Rate Limiting sert à limiter le nombre de requêtes envoyées par une IP
-            pendant un certain temps.
+            HTTPS sert à chiffrer les échanges entre le navigateur et le site. Le certificat permet
+            au navigateur de vérifier qu’il communique avec le bon service.
           </p>
           <p>
-            Cela permet de mieux comprendre comment certains sites ralentissent ou bloquent
-            des comportements abusifs comme le spam ou le brute force.
+            Dans le labo, Cloudflare facilite cette partie en ajoutant une couche de sécurité visible
+            par le cadenas du navigateur.
           </p>
         </article>
 
-        <article class="card">
-          <h3>Challenge & CAPTCHA</h3>
+        <article class="theory-card large">
+          <h2>05 / Règles WAF importantes</h2>
           <p>
-            Cloudflare peut demander une vérification avant d’autoriser l’accès à une page.
+            Le WAF fonctionne avec une logique simple : si une condition correspond à la requête,
+            alors Cloudflare applique une action. Cela permet de bloquer, autoriser ou vérifier
+            certains visiteurs.
           </p>
-          <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+          <table>
             <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">Block</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Refuse l’accès</td>
+              <th>Champ</th>
+              <th>Rôle</th>
+              <th>Exemple d’utilisation</th>
             </tr>
             <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">Challenge</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Demande un CAPTCHA</td>
+              <td>URI Path</td>
+              <td>Filtrer une page précise</td>
+              <td>Bloquer une page sensible</td>
             </tr>
             <tr>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;color:#00b7ff;">JS Challenge</td>
-              <td style="border:1px solid rgba(0,180,255,0.2);padding:10px;">Teste le navigateur</td>
+              <td>IP Source</td>
+              <td>Filtrer une adresse IP</td>
+              <td>Bloquer une IP abusive</td>
+            </tr>
+            <tr>
+              <td>Country</td>
+              <td>Filtrer selon le pays</td>
+              <td>Autoriser ou bloquer une zone géographique</td>
+            </tr>
+            <tr>
+              <td>User-Agent</td>
+              <td>Identifier navigateur ou outil</td>
+              <td>Détecter certains bots ou scanners</td>
+            </tr>
+            <tr>
+              <td>Cookie</td>
+              <td>Filtrer selon une valeur stockée côté navigateur</td>
+              <td>Créer une exception pour un utilisateur précis</td>
             </tr>
           </table>
         </article>
 
-        <article class="card terminal">
-          <h3>Fonctionnement global</h3>
-          <p>
-            Lorsqu’un visiteur ouvre le site, la requête passe d’abord par Cloudflare.
-          </p>
-          <p>
-            Les règles sont analysées avant que le trafic soit autorisé à atteindre
-            GitHub Pages.
-          </p>
-        </article>
-        <article class="project-card">
-          <h2>Création du site web</h2>
-          <p>
-            Le site sert de base principale au laboratoire. Il permet de mettre en
-            pratique les notions étudiées tout au long du projet.
-          </p>
-          <ul>
-            <li>Création des pages HTML</li>
-            <li>Organisation de la navigation</li>
-            <li>Compréhension du fonctionnement d’un site statique</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">GitHub Pages</span>
-          </div>
+        <article class="theory-card">
+          <h2>06 / Actions possibles</h2>
+          <table>
+            <tr>
+              <th>Action</th>
+              <th>Effet</th>
+            </tr>
+            <tr>
+              <td>Allow</td>
+              <td>Autorise la requête.</td>
+            </tr>
+            <tr>
+              <td>Block</td>
+              <td>Refuse directement l’accès.</td>
+            </tr>
+            <tr>
+              <td>Challenge</td>
+              <td>Demande une vérification humaine.</td>
+            </tr>
+            <tr>
+              <td>JS Challenge</td>
+              <td>Vérifie le comportement du navigateur.</td>
+            </tr>
+          </table>
         </article>
 
-        <article class="project-card">
-          <h2>Achat d’un nom de domaine</h2>
+        <article class="theory-card">
+          <h2>07 / Rate Limiting</h2>
           <p>
-            L’achat d’un domaine permet d’obtenir une adresse web plus professionnelle
-            et plus simple à retenir qu’une adresse technique GitHub.
+            Le Rate Limiting permet de limiter le nombre de requêtes venant d’une même source
+            pendant une période donnée.
           </p>
-          <ul>
-            <li>Comprendre le rôle des domaines Internet</li>
-            <li>Découvrir l’ICANN et la gestion DNS</li>
-            <li>Associer un domaine à un site web</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">DNS</span>
-            <span class="tag">ICANN</span>
-          </div>
+          <p>
+            Cette notion est utile pour comprendre comment on peut réduire les comportements abusifs,
+            comme le flood, le spam ou certaines tentatives de brute force.
+          </p>
         </article>
 
-        <article class="project-card">
-          <h2>Cloudflare & Protection Web</h2>
+        <article class="theory-card terminal">
+          <h2>08 / Redirections</h2>
           <p>
-            Cloudflare est utilisé pour comprendre comment un service peut protéger
-            un site web tout en améliorant sa gestion réseau.
-          </p>
-          <ul>
-            <li>Protection HTTPS</li>
-            <li>Gestion DNS centralisée</li>
-            <li>Découverte du WAF et du filtrage</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Cloudflare</span>
-            <span class="tag">WAF</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h2>Proxy & Reverse Proxy</h2>
-          <p>
-            Cette partie du projet permet de comprendre comment le trafic réseau
-            peut passer par un intermédiaire avant d’atteindre le serveur réel.
-          </p>
-          <ul>
-            <li>Comprendre le rôle d’un proxy</li>
-            <li>Découvrir le fonctionnement d’un reverse proxy</li>
-            <li>Observer la circulation du trafic web</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Reverse Proxy</span>
-            <span class="tag">Réseau</span>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h2>Compréhension des DNS</h2>
-          <p>
-            Les DNS sont une partie essentielle du projet car ils permettent de faire
-            le lien entre un nom de domaine et le serveur qui héberge réellement le site.
-          </p>
-          <ul>
-            <li>Propagation DNS</li>
-            <li>Nameservers</li>
-            <li>Enregistrements CNAME</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">DNS</span>
-            <span class="tag">Cloud</span>
-          </div>
-        </article>
-
-        <article class="project-card terminal-card">
-          <h2>Finalité du projet</h2>
-          <p>
-            Le but final du laboratoire est surtout de mieux comprendre le fonctionnement
-            global d’une infrastructure web moderne.
+            Le reverse proxy peut aussi servir à rediriger un visiteur vers une autre URL.
+            Cela montre que Cloudflare peut agir avant même que la requête arrive sur l’hébergement.
           </p>
           <p>
-            Ce projet permet de relier la théorie avec la pratique en observant concrètement
-            comment les différents services communiquent entre eux sur Internet.
+            Ce mécanisme repose notamment sur les statuts HTTP et les headers de redirection.
           </p>
         </article>
       </div>
 
-      <section class="roadmap">
-        <h2>Ce que le projet permet de comprendre</h2>
-        <div class="steps">
-          <div class="step">
-            <strong>01 / Réseau</strong>
-            <p>Comprendre comment les requêtes circulent entre le navigateur et le serveur.</p>
+      <section class="summary">
+        <h2>Ce qu’il faut retenir</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <strong>DNS</strong>
+            <p>Le domaine doit savoir vers qui diriger le trafic.</p>
           </div>
-          <div class="step">
-            <strong>02 / DNS</strong>
-            <p>Découvrir le rôle des domaines, des nameservers et de la propagation DNS.</p>
+          <div class="flow-step">
+            <strong>Proxy</strong>
+            <p>Cloudflare se place devant le site réel.</p>
           </div>
-          <div class="step">
-            <strong>03 / Protection</strong>
-            <p>Observer comment Cloudflare protège un site grâce au reverse proxy et au WAF.</p>
+          <div class="flow-step">
+            <strong>WAF</strong>
+            <p>Les règles filtrent les requêtes avant l’hébergement.</p>
           </div>
-          <div class="step">
-            <strong>04 / Hébergement</strong>
-            <p>Comprendre comment GitHub Pages publie un site statique sur Internet.</p>
+          <div class="flow-step">
+            <strong>HTTPS</strong>
+            <p>Les échanges sont chiffrés et plus sûrs.</p>
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page 2 - Projets</title>
+  <title>Projet</title>
   <style>
     * {
       margin: 0;
@@ -49,7 +49,7 @@
     }
 
     .sidebar {
-      width: 260px;
+      width: 280px;
       padding: 24px;
       position: sticky;
       top: 32px;
@@ -78,15 +78,18 @@
       transition: 0.2s ease;
     }
 
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link.active {
       border-color: #00b7ff;
       transform: translateX(4px);
       box-shadow: 0 0 16px rgba(0,180,255,0.2);
+      background: rgba(0,180,255,0.07);
     }
 
     .nav-link span {
       color: #00b7ff;
       font-family: Consolas, monospace;
+      min-width: 26px;
     }
 
     .content {
@@ -100,7 +103,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 20px;
-      margin-bottom: 34px;
+      margin-bottom: 30px;
     }
 
     .eyebrow {
@@ -113,7 +116,7 @@
     }
 
     h1 {
-      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      font-size: clamp(2.5rem, 5vw, 4.6rem);
       line-height: 1;
       text-transform: uppercase;
       color: white;
@@ -133,94 +136,82 @@
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
       padding: 24px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .intro p {
       color: #d7e6ed;
       line-height: 1.7;
+      margin-bottom: 10px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
     }
 
-    .project-card {
+    .chapter {
       position: relative;
-      min-height: 230px;
       padding: 22px;
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
-      overflow: hidden;
+      min-height: 220px;
     }
 
-    .project-card::before {
+    .chapter::before {
       content: "";
       position: absolute;
-      top: 0;
       left: 0;
+      top: 0;
       width: 4px;
       height: 100%;
       background: linear-gradient(#00b7ff, #7dff58);
-      opacity: 0.75;
+      opacity: 0.8;
     }
 
-    .project-card h2 {
+    .chapter.large {
+      grid-column: span 2;
+    }
+
+    .chapter h2 {
       color: #00b7ff;
       font-size: 1.05rem;
       text-transform: uppercase;
       letter-spacing: 1.4px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .project-card p,
-    .project-card li {
+    .chapter p,
+    .chapter li {
       color: #d7e6ed;
-      line-height: 1.6;
-      font-size: 0.95rem;
+      line-height: 1.65;
+      font-size: 0.96rem;
     }
 
-    .project-card ul {
+    .chapter ul {
       margin-left: 18px;
       margin-top: 10px;
     }
 
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .tag {
-      color: #7dff58;
-      border: 1px solid rgba(120,255,80,0.35);
-      background: rgba(0,0,0,0.32);
-      padding: 6px 10px;
-      font-family: Consolas, monospace;
-      font-size: 0.78rem;
-    }
-
-    .terminal-card {
+    .terminal {
       border-color: rgba(120,255,80,0.38);
       background: rgba(0,0,0,0.45);
       font-family: Consolas, monospace;
     }
 
-    .terminal-card h2 {
+    .terminal h2 {
       color: #7dff58;
     }
 
-    .roadmap {
+    .timeline {
       margin-top: 22px;
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
       padding: 24px;
     }
 
-    .roadmap h2 {
+    .timeline h2 {
       color: #00b7ff;
       text-transform: uppercase;
       letter-spacing: 1.4px;
@@ -230,7 +221,7 @@
 
     .steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 14px;
     }
 
@@ -263,6 +254,10 @@
         position: relative;
         top: 0;
       }
+
+      .chapter.large {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
@@ -272,166 +267,179 @@
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>01</span>
+        <span>00</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link" href="page1.html">
+        <span>01</span>
+        <p>Labo Cloud Reverse Proxy</p>
+      </a>
+
+      <a class="nav-link active" href="page2.html">
         <span>02</span>
-        <p>Page 1</p>
+        <p>Projet</p>
       </a>
 
       <a class="nav-link" href="page3.html">
         <span>03</span>
-        <p>Théories</p>
+        <p>Théorie</p>
       </a>
 
       <a class="nav-link" href="page4.html">
         <span>04</span>
-        <p>Page 4</p>
+        <p>Notes techniques</p>
       </a>
     </aside>
 
     <section class="content">
       <div class="header">
         <div>
-          <p class="eyebrow">Portfolio technique</p>
-          <h1>Projets</h1>
+          <p class="eyebrow">Objectifs & réalisation</p>
+          <h1>Projet</h1>
         </div>
 
-        <div class="status">Build actif</div>
+        <div class="status">Plan du labo</div>
       </div>
 
       <div class="intro">
         <p>
-          Cette page présente les différents points techniques qui seront étudiés
-          et réalisés dans le laboratoire. Le but principal est surtout de comprendre
-          comment un site web moderne fonctionne réellement derrière son apparence visuelle.
+          Cette page explique ce qui va être réalisé dans le projet et surtout ce que chaque
+          partie doit permettre de comprendre. Le but n’est pas seulement de construire un site,
+          mais de voir comment plusieurs services travaillent ensemble pour rendre ce site accessible,
+          propre et plus sécurisé.
         </p>
-        <p style="margin-top:14px;">
-          Chaque partie du projet permet d’aborder une notion différente : réseau,
-          sécurité, hébergement, DNS, reverse proxy et protection web.
+        <p>
+          Le projet est découpé en plusieurs blocs : le domaine, le DNS, l’hébergement,
+          Cloudflare, le reverse proxy et le WAF. Chaque bloc a son importance dans le résultat final.
         </p>
       </div>
 
       <div class="grid">
-        <article class="project-card">
-          <h2>Création du site web</h2>
+        <article class="chapter large">
+          <h2>01 / Finalité du projet</h2>
           <p>
-            Le site sert de base principale au laboratoire. Il permet de mettre en
-            pratique les notions étudiées tout au long du projet.
+            La finalité est de mettre en place un site web public accessible avec un nom de domaine
+            personnalisé, puis de le faire passer par Cloudflare avant qu’il atteigne l’hébergement réel.
           </p>
-          <ul>
-            <li>Création des pages HTML</li>
-            <li>Organisation de la navigation</li>
-            <li>Compréhension du fonctionnement d’un site statique</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">GitHub Pages</span>
-          </div>
+          <p>
+            Ce montage permet de comprendre une idée importante : un site visible sur Internet
+            n’est pas forcément contacté directement. Il peut être protégé par une couche intermédiaire
+            qui analyse et contrôle le trafic.
+          </p>
         </article>
 
-        <article class="project-card">
-          <h2>Achat d’un nom de domaine</h2>
+        <article class="chapter">
+          <h2>02 / Achat du nom de domaine</h2>
           <p>
-            L’achat d’un domaine permet d’obtenir une adresse web plus professionnelle
-            et plus simple à retenir qu’une adresse technique GitHub.
+            Le nom de domaine est le point d’entrée du projet. Sans lui, le site reste accessible
+            via une adresse technique peu lisible. Avec un domaine, on obtient une adresse plus claire
+            et plus professionnelle.
           </p>
           <ul>
-            <li>Comprendre le rôle des domaines Internet</li>
-            <li>Découvrir l’ICANN et la gestion DNS</li>
-            <li>Associer un domaine à un site web</li>
+            <li>Comprendre le rôle d’un domaine</li>
+            <li>Relier un nom humain à un service web</li>
+            <li>Préparer la gestion DNS via Cloudflare</li>
           </ul>
-          <div class="tag-row">
-            <span class="tag">DNS</span>
-            <span class="tag">ICANN</span>
-          </div>
         </article>
 
-        <article class="project-card">
-          <h2>Cloudflare & Protection Web</h2>
+        <article class="chapter">
+          <h2>03 / Gestion DNS</h2>
           <p>
-            Cloudflare est utilisé pour comprendre comment un service peut protéger
-            un site web tout en améliorant sa gestion réseau.
+            Le DNS sert à faire le lien entre le nom de domaine et la destination du trafic.
+            Dans le projet, Cloudflare devient le gestionnaire DNS principal grâce au changement
+            des nameservers.
+          </p>
+          <p>
+            Cette partie permet de comprendre que le DNS agit comme une sorte d’annuaire d’Internet.
+          </p>
+        </article>
+
+        <article class="chapter">
+          <h2>04 / Hébergement du site</h2>
+          <p>
+            Le site est hébergé comme un site statique. Cela signifie qu’il contient principalement
+            des fichiers HTML, CSS et éventuellement JavaScript, sans base de données ni backend complexe.
           </p>
           <ul>
-            <li>Protection HTTPS</li>
-            <li>Gestion DNS centralisée</li>
-            <li>Découverte du WAF et du filtrage</li>
+            <li>Créer les pages du site</li>
+            <li>Comprendre GitHub Pages</li>
+            <li>Publier des fichiers web sur Internet</li>
           </ul>
-          <div class="tag-row">
-            <span class="tag">Cloudflare</span>
-            <span class="tag">WAF</span>
-          </div>
         </article>
 
-        <article class="project-card">
-          <h2>Proxy & Reverse Proxy</h2>
+        <article class="chapter">
+          <h2>05 / Cloudflare</h2>
           <p>
-            Cette partie du projet permet de comprendre comment le trafic réseau
-            peut passer par un intermédiaire avant d’atteindre le serveur réel.
+            Cloudflare est la couche placée devant le site. Son intérêt est de centraliser plusieurs
+            fonctions importantes : DNS, HTTPS, protection, cache et filtrage.
           </p>
-          <ul>
-            <li>Comprendre le rôle d’un proxy</li>
-            <li>Découvrir le fonctionnement d’un reverse proxy</li>
-            <li>Observer la circulation du trafic web</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Reverse Proxy</span>
-            <span class="tag">Réseau</span>
-          </div>
+          <p>
+            Dans le projet, Cloudflare permet surtout de comprendre comment un service externe peut
+            protéger un site sans modifier directement les fichiers hébergés.
+          </p>
         </article>
 
-        <article class="project-card">
-          <h2>Compréhension des DNS</h2>
+        <article class="chapter terminal">
+          <h2>06 / Proxy & Reverse Proxy</h2>
           <p>
-            Les DNS sont une partie essentielle du projet car ils permettent de faire
-            le lien entre un nom de domaine et le serveur qui héberge réellement le site.
+            Un proxy classique agit souvent pour le client, alors qu’un reverse proxy agit devant
+            le serveur. Ici, Cloudflare reçoit les requêtes des visiteurs avant de les transmettre
+            au site hébergé.
           </p>
-          <ul>
-            <li>Propagation DNS</li>
-            <li>Nameservers</li>
-            <li>Enregistrements CNAME</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">DNS</span>
-            <span class="tag">Cloud</span>
-          </div>
+          <p>
+            C’est cette logique qui rend le reverse proxy intéressant : il devient un point de passage
+            obligatoire, donc un point de contrôle.
+          </p>
         </article>
 
-        <article class="project-card terminal-card">
-          <h2>Finalité du projet</h2>
+        <article class="chapter">
+          <h2>07 / HTTPS & certificats</h2>
           <p>
-            Le but final du laboratoire est surtout de mieux comprendre le fonctionnement
-            global d’une infrastructure web moderne.
+            Le HTTPS permet de chiffrer les échanges entre le navigateur et le site. Dans le projet,
+            cette partie permet de comprendre pourquoi un cadenas apparaît dans le navigateur et pourquoi
+            les certificats sont importants.
           </p>
           <p>
-            Ce projet permet de relier la théorie avec la pratique en observant concrètement
-            comment les différents services communiquent entre eux sur Internet.
+            La sécurité ne se voit pas toujours, mais elle change la manière dont les données circulent.
+          </p>
+        </article>
+
+        <article class="chapter">
+          <h2>08 / WAF et règles de sécurité</h2>
+          <p>
+            Le WAF permet de créer des règles pour contrôler l’accès au site. On peut par exemple
+            bloquer une page précise, filtrer selon un pays, un navigateur, une IP ou certains comportements.
+          </p>
+          <p>
+            Cette partie montre que le reverse proxy ne sert pas seulement à rediriger le trafic :
+            il peut aussi devenir une vraie couche de sécurité.
           </p>
         </article>
       </div>
 
-      <section class="roadmap">
-        <h2>Ce que le projet permet de comprendre</h2>
+      <section class="timeline">
+        <h2>Progression logique du projet</h2>
         <div class="steps">
           <div class="step">
-            <strong>01 / Réseau</strong>
-            <p>Comprendre comment les requêtes circulent entre le navigateur et le serveur.</p>
+            <strong>01 / Domaine</strong>
+            <p>Obtenir une adresse publique claire pour le site.</p>
           </div>
           <div class="step">
             <strong>02 / DNS</strong>
-            <p>Découvrir le rôle des domaines, des nameservers et de la propagation DNS.</p>
+            <p>Comprendre comment le domaine dirige le trafic.</p>
           </div>
           <div class="step">
-            <strong>03 / Protection</strong>
-            <p>Observer comment Cloudflare protège un site grâce au reverse proxy et au WAF.</p>
+            <strong>03 / Hébergement</strong>
+            <p>Publier les pages web avec un hébergement statique.</p>
           </div>
           <div class="step">
-            <strong>04 / Hébergement</strong>
-            <p>Comprendre comment GitHub Pages publie un site statique sur Internet.</p>
+            <strong>04 / Reverse Proxy</strong>
+            <p>Faire passer les visiteurs par Cloudflare avant le site.</p>
+          </div>
+          <div class="step">
+            <strong>05 / Sécurité</strong>
+            <p>Ajouter HTTPS, filtrage et règles WAF.</p>
           </div>
         </div>
       </section>
