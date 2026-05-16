@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notes techniques</title>
+  <title>Théorie</title>
   <style>
     * {
       margin: 0;
@@ -132,15 +132,9 @@
       white-space: nowrap;
     }
 
-    .intro,
-    .note,
-    .commands,
-    .recap {
+    .intro {
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
-    }
-
-    .intro {
       padding: 24px;
       margin-bottom: 20px;
     }
@@ -151,19 +145,21 @@
       margin-bottom: 10px;
     }
 
-    .notes {
+    .grid {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 18px;
     }
 
-    .note,
-    .recap {
+    .theory-card {
       position: relative;
-      padding: 24px;
+      padding: 22px;
+      border: 1px solid rgba(0,180,255,0.28);
+      background: rgba(255,255,255,0.02);
+      min-height: 220px;
     }
 
-    .note::before,
-    .recap::before {
+    .theory-card::before {
       content: "";
       position: absolute;
       left: 0;
@@ -174,9 +170,11 @@
       opacity: 0.8;
     }
 
-    .note h2,
-    .recap h2,
-    .commands h2 {
+    .theory-card.large {
+      grid-column: span 2;
+    }
+
+    .theory-card h2 {
       color: #00b7ff;
       font-size: 1.05rem;
       text-transform: uppercase;
@@ -184,33 +182,49 @@
       margin-bottom: 14px;
     }
 
-    .note p,
-    .note li,
-    .recap p,
-    .recap li {
+    .theory-card p,
+    .theory-card li,
+    .theory-card td,
+    .theory-card th {
       color: #d7e6ed;
       line-height: 1.65;
       font-size: 0.96rem;
     }
 
-    .note ul,
-    .recap ul {
+    .theory-card ul {
       margin-left: 18px;
       margin-top: 10px;
     }
 
-    .problem {
-      color: #ff8f8f;
-      font-family: Consolas, monospace;
-      margin-bottom: 8px;
-      display: block;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: rgba(0,0,0,0.22);
     }
 
-    .solution {
-      color: #7dff58;
+    th,
+    td {
+      border: 1px solid rgba(0,180,255,0.23);
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #00b7ff !important;
+      text-align: left;
       font-family: Consolas, monospace;
-      margin-top: 14px;
-      display: block;
+      font-weight: 500;
+    }
+
+    pre {
+      overflow-x: auto;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,180,255,0.2);
+      padding: 14px;
+      color: #7dff58;
+      margin: 12px 0;
+      font-family: Consolas, monospace;
     }
 
     .terminal {
@@ -223,61 +237,72 @@
       color: #7dff58;
     }
 
-    .recap-grid {
-      display: grid;
-      gap: 18px;
-      margin-top: 18px;
+    .mini {
+      color: #8fa3ad !important;
+      font-size: 0.9rem !important;
+      margin-top: 10px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      background: rgba(0,0,0,0.28);
-      overflow: hidden;
+    .used {
+      color: #7dff58 !important;
+      font-weight: 600;
     }
 
-    th,
-    td {
-      border: 1px solid rgba(0,180,255,0.24);
-      padding: 12px;
-      color: #d7e6ed;
-      line-height: 1.45;
-      font-size: 0.92rem;
-      vertical-align: top;
+    .unused {
+      color: #6b7882 !important;
+      opacity: 0.65;
     }
 
-    th {
-      color: #00b7ff;
-      font-family: Consolas, monospace;
-      text-align: left;
-      font-weight: 500;
-      background: rgba(0,180,255,0.06);
-    }
-
-    .ok {
+    .badge-used {
       color: #7dff58;
       font-family: Consolas, monospace;
     }
 
-    .warn {
-      color: #ffd166;
+    .badge-unused {
+      color: #6b7882;
       font-family: Consolas, monospace;
+      opacity: 0.75;
     }
 
-    .commands {
+    .summary {
       margin-top: 22px;
+      border: 1px solid rgba(0,180,255,0.28);
+      background: rgba(255,255,255,0.02);
       padding: 24px;
     }
 
-    pre {
-      overflow-x: auto;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(0,180,255,0.2);
-      padding: 14px;
+    .summary h2 {
+      color: #00b7ff;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+
+    .flow-step {
+      border: 1px solid rgba(0,180,255,0.22);
+      padding: 16px;
+      background: rgba(0,0,0,0.24);
+      text-align: center;
+    }
+
+    .flow-step strong {
+      display: block;
       color: #7dff58;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       font-family: Consolas, monospace;
+    }
+
+    .flow-step p {
+      color: #d7e6ed;
+      line-height: 1.5;
+      font-size: 0.92rem;
     }
 
     @media (max-width: 1000px) {
@@ -289,6 +314,10 @@
         width: 100%;
         position: relative;
         top: 0;
+      }
+
+      .theory-card.large {
+        grid-column: span 1;
       }
     }
 
@@ -322,12 +351,12 @@
         <p>Projet</p>
       </a>
 
-      <a class="nav-link" href="page3.html">
+      <a class="nav-link active" href="page3.html">
         <span>04</span>
         <p>Théorie</p>
       </a>
 
-      <a class="nav-link active" href="page4.html">
+      <a class="nav-link" href="page4.html">
         <span>05</span>
         <p>Notes techniques</p>
       </a>
@@ -336,428 +365,444 @@
     <section class="content">
       <div class="header">
         <div>
-          <p class="eyebrow">Journal du laboratoire</p>
-          <h1>Notes techniques</h1>
+          <p class="eyebrow">Compréhension réseau & sécurité</p>
+          <h1>Théorie</h1>
         </div>
 
-        <div class="status">Retour d’expérience</div>
+        <div class="status">Notes essentielles</div>
       </div>
 
       <div class="intro">
         <p>
-          Cette page reprend les problèmes concrets rencontrés pendant le laboratoire. Elle ne présente
-          pas seulement ce qui a fonctionné, mais aussi les erreurs, les hésitations et les imprévus qui
-          ont permis de mieux comprendre le fonctionnement réel de Cloudflare, du DNS, de GitHub Pages
-          et du WAF.
+          Cette page regroupe les notions théoriques importantes rencontrées pendant le laboratoire.
+          Elle ne reprend pas toutes les manipulations pas à pas, mais explique les concepts nécessaires
+          pour comprendre le fonctionnement global du projet.
         </p>
         <p>
-          Elle sert aussi de rapport technique sous forme de site web. Les tableaux remplacent certaines
-          captures d’écran en résumant clairement la configuration DNS, les règles WAF, les redirections
-          et les tests réalisés.
+          Les éléments en vert correspondent aux champs, opérateurs ou actions réellement utilisés pendant
+          le labo. Les éléments en gris représentent des possibilités présentes dans Cloudflare, mais non
+          utilisées dans cette réalisation.
         </p>
       </div>
 
-      <div class="recap-grid">
-        <article class="recap">
-          <h2>Configuration DNS Cloudflare</h2>
+      <div class="grid">
+        <article class="theory-card large">
+          <h2>01 / Reverse Proxy</h2>
           <p>
-            Ces enregistrements permettent de relier le domaine personnalisé à GitHub Pages.
-            Le mode <strong>Proxied</strong> signifie que le trafic passe par Cloudflare avant d’arriver
-            sur l’hébergement réel.
+            Un reverse proxy est un serveur intermédiaire placé devant le serveur réel.
+            Dans ce labo, Cloudflare reçoit les requêtes des visiteurs avant de les transmettre
+            à GitHub Pages.
+          </p>
+          <p>
+            Cela permet d’ajouter une couche de contrôle entre le client et l’hébergement :
+            filtrage, HTTPS, cache, redirections et règles WAF.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>02 / DNS & Nameservers</h2>
+          <p>
+            Le DNS permet de transformer un nom de domaine lisible en destination technique.
+            Les nameservers indiquent quel service est responsable de la zone DNS du domaine.
+          </p>
+          <p>
+            En remplaçant les nameservers Namecheap par ceux de Cloudflare, Cloudflare devient
+            responsable de la résolution DNS du domaine.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>03 / CNAME</h2>
+          <p>
+            Un CNAME est un alias DNS. Il permet de faire pointer un nom de domaine ou un
+            sous-domaine vers un autre nom de domaine.
+          </p>
+          <p>
+            Dans ce projet, les CNAME permettent de faire pointer le domaine personnalisé vers
+            <strong>regalia00.github.io</strong>, qui correspond à GitHub Pages.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>04 / Proxy Status</h2>
+          <table>
+            <tr>
+              <th>État</th>
+              <th>Compréhension</th>
+            </tr>
+            <tr>
+              <td>Nuage orange</td>
+              <td>Cloudflare agit comme reverse proxy et peut appliquer les règles WAF.</td>
+            </tr>
+            <tr>
+              <td>Nuage gris</td>
+              <td>Cloudflare gère seulement le DNS, sans filtrer le trafic HTTP/HTTPS.</td>
+            </tr>
+          </table>
+          <p class="mini">
+            Le nuage orange est indispensable pour que le WAF puisse agir.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>05 / HTTPS & SSL/TLS</h2>
+          <p>
+            HTTPS chiffre les échanges entre le navigateur et le site. Le protocole SSL/TLS
+            garantit la confidentialité et l’intégrité des données échangées.
+          </p>
+          <p>
+            Cloudflare facilite cette partie en fournissant une couche HTTPS visible par le cadenas
+            dans le navigateur.
+          </p>
+        </article>
+
+        <article class="theory-card large">
+          <h2>06 / Fonctionnement général d’une règle WAF</h2>
+          <p>
+            Une règle WAF Cloudflare suit une logique conditionnelle simple :
+          </p>
+
+          <pre>SI condition vraie
+ALORS appliquer action</pre>
+
+          <p>
+            Une condition est construite à partir d’un champ, d’un opérateur et d’une valeur.
+            Plusieurs conditions peuvent être combinées avec <strong>AND</strong>, <strong>OR</strong>
+            ou <strong>NOT</strong>.
           </p>
 
           <table>
             <tr>
-              <th>Type</th>
-              <th>Nom</th>
-              <th>Cible</th>
-              <th>Proxy</th>
+              <th>Élément</th>
               <th>Rôle</th>
+              <th>Exemple</th>
             </tr>
             <tr>
-              <td>CNAME</td>
-              <td>www</td>
-              <td>regalia00.github.io</td>
-              <td><span class="ok">Proxied</span></td>
-              <td>Adresse principale du site</td>
+              <td>Champ</td>
+              <td>Information analysée dans la requête</td>
+              <td>URI Path, Country, Cookie</td>
             </tr>
             <tr>
-              <td>CNAME</td>
-              <td>@</td>
-              <td>regalia00.github.io</td>
-              <td><span class="ok">Proxied</span></td>
-              <td>Domaine racine</td>
+              <td>Opérateur</td>
+              <td>Façon de comparer la valeur</td>
+              <td>equals, contains, does not contain</td>
             </tr>
             <tr>
-              <td>CNAME</td>
-              <td>xena</td>
-              <td>regalia00.github.io</td>
-              <td><span class="ok">Proxied</span></td>
-              <td>Sous-domaine utilisé pour la redirection</td>
+              <td>Action</td>
+              <td>Réaction appliquée par Cloudflare</td>
+              <td>Block, Managed Challenge</td>
             </tr>
             <tr>
-              <td>CNAME</td>
-              <td>xyz</td>
-              <td>regalia00.github.io</td>
-              <td><span class="ok">Proxied</span></td>
-              <td>Sous-domaine utilisé pour la redirection</td>
+              <td>Logique</td>
+              <td>Combinaison de conditions</td>
+              <td>AND / OR / NOT</td>
             </tr>
           </table>
         </article>
 
-        <article class="recap">
-          <h2>Règles WAF / sécurité</h2>
-          <p>
-            Les règles WAF permettent à Cloudflare d’analyser les requêtes HTTP avant GitHub Pages.
-            Elles servent à bloquer, filtrer ou demander une vérification selon des conditions précises.
+        <article class="theory-card large">
+          <h2>07 / Champs disponibles dans Cloudflare WAF</h2>
+
+          <table>
+            <tr>
+              <th>Champ</th>
+              <th>Utilisé</th>
+              <th>Rôle</th>
+            </tr>
+            <tr>
+              <td class="used">URI Path</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Filtrer une page précise, par exemple /page2.html.</td>
+            </tr>
+            <tr>
+              <td class="used">Country</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Filtrer selon le pays d’origine de l’adresse IP.</td>
+            </tr>
+            <tr>
+              <td class="used">User-Agent</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Identifier le navigateur ou certains outils automatisés.</td>
+            </tr>
+            <tr>
+              <td class="used">Cookie</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Filtrer selon une valeur envoyée par le navigateur.</td>
+            </tr>
+            <tr>
+              <td class="unused">IP Source Address</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Filtrer une adresse IP précise ou une plage IP.</td>
+            </tr>
+            <tr>
+              <td class="unused">Hostname</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Cibler un domaine ou un sous-domaine précis.</td>
+            </tr>
+            <tr>
+              <td class="unused">HTTP Method</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Filtrer selon GET, POST, PUT, DELETE, etc.</td>
+            </tr>
+            <tr>
+              <td class="unused">Referer</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Analyser la page d’origine ayant envoyé le visiteur.</td>
+            </tr>
+            <tr>
+              <td class="unused">Query String</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Filtrer selon les paramètres de l’URL, par exemple ?id=1.</td>
+            </tr>
+            <tr>
+              <td class="unused">Headers HTTP</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Analyser d’autres en-têtes envoyés par le navigateur.</td>
+            </tr>
+            <tr>
+              <td class="unused">ASN</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Filtrer selon le fournisseur réseau ou l’opérateur Internet.</td>
+            </tr>
+            <tr>
+              <td class="unused">Bot Score</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Évaluer la probabilité qu’une requête provienne d’un bot.</td>
+            </tr>
+            <tr>
+              <td class="unused">JA3 / TLS Fingerprint</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Identifier une empreinte TLS du client.</td>
+            </tr>
+          </table>
+
+          <p class="mini">
+            Les champs utilisés dans le labo sont suffisants pour comprendre les bases du filtrage applicatif :
+            URL, pays, navigateur et cookie.
           </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>08 / Opérateurs disponibles</h2>
+
+          <table>
+            <tr>
+              <th>Opérateur</th>
+              <th>Utilisé</th>
+              <th>Fonction</th>
+            </tr>
+            <tr>
+              <td class="used">equals</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>La valeur doit être exactement identique.</td>
+            </tr>
+            <tr>
+              <td class="used">contains</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>La valeur doit contenir un texte précis.</td>
+            </tr>
+            <tr>
+              <td class="used">does not contain</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>La valeur ne doit pas contenir un texte précis.</td>
+            </tr>
+            <tr>
+              <td class="unused">does not equal</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">La valeur doit être différente.</td>
+            </tr>
+            <tr>
+              <td class="unused">starts with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">La valeur commence par un texte donné.</td>
+            </tr>
+            <tr>
+              <td class="unused">ends with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">La valeur finit par un texte donné.</td>
+            </tr>
+            <tr>
+              <td class="unused">matches regex</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">La valeur correspond à une expression régulière.</td>
+            </tr>
+            <tr>
+              <td class="unused">in</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">La valeur appartient à une liste définie.</td>
+            </tr>
+            <tr>
+              <td class="unused">greater than / less than</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Comparer des valeurs numériques.</td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="theory-card">
+          <h2>09 / Actions Cloudflare</h2>
+
+          <table>
+            <tr>
+              <th>Action</th>
+              <th>Utilisé</th>
+              <th>Effet</th>
+            </tr>
+            <tr>
+              <td class="used">Block</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Bloque immédiatement l’accès à la ressource.</td>
+            </tr>
+            <tr>
+              <td class="used">Managed Challenge</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Demande une vérification gérée automatiquement par Cloudflare.</td>
+            </tr>
+            <tr>
+              <td class="unused">Allow</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Autorise explicitement une requête.</td>
+            </tr>
+            <tr>
+              <td class="unused">JS Challenge</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Vérifie que le client exécute JavaScript.</td>
+            </tr>
+            <tr>
+              <td class="unused">Interactive Challenge</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Demande une interaction explicite à l’utilisateur.</td>
+            </tr>
+            <tr>
+              <td class="unused">Skip</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Ignore certaines protections ou règles.</td>
+            </tr>
+            <tr>
+              <td class="unused">Log</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td class="unused">Journalise sans bloquer ni modifier la requête.</td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="theory-card large">
+          <h2>10 / Règles réellement créées pendant le labo</h2>
 
           <table>
             <tr>
               <th>Objectif</th>
               <th>Condition</th>
               <th>Action</th>
-              <th>Résultat attendu</th>
             </tr>
             <tr>
-              <td>Bloquer page2.html</td>
+              <td>Bloquer une page</td>
               <td>URI Path equals /page2.html</td>
               <td>Block</td>
-              <td>La page est inaccessible sans exception.</td>
             </tr>
             <tr>
-              <td>Géoblocage</td>
+              <td>Geoblocking</td>
               <td>Country equals United States AND URI Path equals /page1.html</td>
               <td>Block</td>
-              <td>Les IP américaines ne peuvent pas accéder à page1.html.</td>
             </tr>
             <tr>
-              <td>Filtrage Chrome</td>
+              <td>Bloquer Chrome</td>
               <td>User-Agent contains Chrome</td>
               <td>Block</td>
-              <td>Les navigateurs basés sur Chrome sont bloqués.</td>
             </tr>
             <tr>
-              <td>Challenge Belgique + Chrome</td>
+              <td>Challenge Chrome belge</td>
               <td>Country equals Belgium AND User-Agent contains Chrome AND URI Path equals /page2.html</td>
               <td>Managed Challenge</td>
-              <td>L’utilisateur doit résoudre un challenge avant l’accès.</td>
             </tr>
             <tr>
-              <td>Filtrage par cookie</td>
+              <td>Filtrage cookie</td>
               <td>URI Path equals /page2.html AND NOT Cookie contains superadmin=yes</td>
               <td>Block</td>
-              <td>Sans le cookie attendu, l’accès est refusé.</td>
             </tr>
           </table>
+
+          <p class="mini">
+            Ces règles montrent l’usage des principales possibilités du WAF : filtrage par URL,
+            géolocalisation IP, navigateur, challenge et cookie.
+          </p>
         </article>
 
-        <article class="recap">
-          <h2>Règles de redirection</h2>
+        <article class="theory-card">
+          <h2>11 / Cookies</h2>
           <p>
-            Les redirections sont configurées dans Cloudflare afin de renvoyer automatiquement certaines
-            URLs vers une autre destination. Elles utilisent des codes HTTP, notamment le code 301 pour
-            une redirection permanente.
+            Un cookie est une donnée stockée côté navigateur et envoyée automatiquement dans les
+            requêtes HTTP. Il peut contenir une valeur servant à identifier une session ou un rôle.
           </p>
-
-          <table>
-            <tr>
-              <th>Source</th>
-              <th>Destination</th>
-              <th>Type</th>
-              <th>Détail important</th>
-            </tr>
-            <tr>
-              <td>www.thibault-esr-itscm.xyz/recherche.html</td>
-              <td>https://google.be</td>
-              <td>301</td>
-              <td>La page n’existe pas réellement sur GitHub Pages.</td>
-            </tr>
-            <tr>
-              <td>xena.thibault-esr-itscm.xyz/*</td>
-              <td>www.thibault-esr-itscm.xyz/*</td>
-              <td>301</td>
-              <td>L’URI est conservée pendant la redirection.</td>
-            </tr>
-            <tr>
-              <td>xyz.thibault-esr-itscm.xyz/*</td>
-              <td>www.thibault-esr-itscm.xyz/*</td>
-              <td>301</td>
-              <td>Une seule règle gère les deux sous-domaines.</td>
-            </tr>
-          </table>
+          <p>
+            Dans le labo, le cookie <strong>superadmin=yes</strong> a été créé manuellement avec
+            JavaScript via les Developer Tools.
+          </p>
+          <p class="mini">
+            Un cookie créé côté client peut être falsifié. Dans un vrai site, il doit être généré
+            et signé par le serveur.
+          </p>
         </article>
 
-        <article class="recap">
-          <h2>Tests réalisés</h2>
+        <article class="theory-card terminal">
+          <h2>12 / Redirections HTTP</h2>
           <p>
-            Ces tests servent à vérifier que la configuration fonctionne et à remplacer certaines captures
-            d’écran par une preuve claire de compréhension.
+            Une redirection HTTP indique au navigateur qu’il doit aller vers une autre URL.
+            Cloudflare peut générer cette redirection avant que la requête n’atteigne GitHub Pages.
           </p>
+          <p>
+            Dans le labo, les redirections permanentes utilisent le code HTTP 301 et le header
+            Location.
+          </p>
+        </article>
 
+        <article class="theory-card">
+          <h2>13 / DNS ≠ Redirection</h2>
+          <p>
+            Le DNS sert à indiquer vers quel service envoyer une requête. Une redirection HTTP,
+            elle, indique au navigateur de changer d’URL.
+          </p>
           <table>
             <tr>
-              <th>Test</th>
-              <th>Méthode</th>
-              <th>Résultat attendu</th>
+              <th>Élément</th>
+              <th>Rôle</th>
             </tr>
             <tr>
-              <td>Vérification des nameservers</td>
-              <td>nslookup avec type NS</td>
-              <td>conrad.ns.cloudflare.com et lorna.ns.cloudflare.com</td>
+              <td>DNS</td>
+              <td>Résout un nom de domaine vers une destination.</td>
             </tr>
             <tr>
-              <td>Accès au site principal</td>
-              <td>https://www.thibault-esr-itscm.xyz</td>
-              <td>Affichage de index.html via GitHub Pages</td>
-            </tr>
-            <tr>
-              <td>Proxy Cloudflare</td>
-              <td>Vérification du mode Proxied</td>
-              <td>Le trafic passe par Cloudflare avant GitHub Pages</td>
-            </tr>
-            <tr>
-              <td>Cookie superadmin</td>
-              <td>document.cookie="superadmin=yes"</td>
-              <td>L’accès protégé est autorisé lorsque le cookie est présent</td>
-            </tr>
-            <tr>
-              <td>Redirection sous-domaine</td>
-              <td>xena.thibault-esr-itscm.xyz/page1.html</td>
-              <td>Redirection vers www.thibault-esr-itscm.xyz/page1.html</td>
+              <td>Redirection</td>
+              <td>Renvoie le navigateur vers une autre URL.</td>
             </tr>
           </table>
         </article>
       </div>
 
-      <div class="notes" style="margin-top: 18px;">
-        <article class="note">
-          <h2>01 / Service de nom de domaine indisponible</h2>
-          <span class="problem">Ce qui s’est passé :</span>
-          <p>
-            Le labo proposait un service d’hébergement de nom de domaine, mais celui-ci était hors service
-            ou inutilisable au moment de la réalisation. Cette étape a donc bloqué le déroulement normal
-            du labo dès le départ.
-          </p>
-
-          <span class="solution">Ce que j’ai fait :</span>
-          <p>
-            Il a fallu improviser et choisir rapidement une alternative fiable, compatible avec Cloudflare
-            et pas trop chère. J’ai donc utilisé Namecheap pour acheter le domaine
-            <strong>thibault-esr-itscm.xyz</strong>. Même si ce n’était pas exactement le service prévu
-            dans le document, cela permettait d’atteindre le même objectif : disposer d’un vrai domaine
-            public à relier à Cloudflare.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>02 / Propagation DNS pas immédiate</h2>
-          <span class="problem">Ce qui s’est passé :</span>
-          <p>
-            Après avoir remplacé les nameservers Namecheap par ceux de Cloudflare, je m’attendais à voir
-            le changement directement. Pourtant, avec <strong>nslookup</strong>, les anciens DNS
-            apparaissaient encore.
-          </p>
-
-          <span class="solution">Ce que j’ai compris :</span>
-          <p>
-            Au début, j’ai cru que j’avais fait une erreur dans la configuration ou que les nameservers
-            avaient été mal copiés. En réalité, la configuration était correcte, mais la propagation DNS
-            n’était pas encore terminée.
-          </p>
-          <p>
-            Les informations DNS peuvent rester en cache chez différents résolveurs pendant un certain
-            temps. Cela signifie qu’un changement effectué chez Namecheap ou Cloudflare n’est pas forcément
-            visible immédiatement depuis un terminal. Il faut attendre que les caches se mettent à jour
-            avant que les nouveaux nameservers Cloudflare apparaissent partout.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>03 / GitHub Pages affichait une erreur 404</h2>
-          <span class="problem">Ce qui s’est passé :</span>
-          <p>
-            Au début, le site GitHub Pages ne s’affichait pas et renvoyait une erreur 404. Ce n’était pas
-            très parlant, car le fichier HTML existait bien.
-          </p>
-
-          <span class="solution">Ce que j’ai corrigé :</span>
-          <p>
-            Le problème venait de la configuration GitHub Pages et du nom du repository. Pour un site
-            utilisateur GitHub Pages, le repository devait correspondre au format attendu :
-            <strong>regalia00.github.io</strong>. Une fois le bon repository utilisé et GitHub Pages activé,
-            le site a commencé à fonctionner.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>04 / Notepad++ et GitHub Web</h2>
-          <span class="problem">Différence avec le labo :</span>
-          <p>
-            Le labo demandait de créer les pages HTML avec Notepad++. Au départ, certaines modifications
-            ont été faites directement depuis l’interface web de GitHub, ce qui fonctionnait, mais ne suivait
-            pas exactement la méthode demandée.
-          </p>
-
-          <span class="solution">Ce que j’ai retenu :</span>
-          <p>
-            Techniquement, les deux méthodes fonctionnent, mais l’objectif du labo était aussi de comprendre
-            la création locale des fichiers HTML. J’ai donc repris la logique avec Notepad++ puis l’envoi
-            des fichiers vers GitHub.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>05 / Proxy Cloudflare activé trop tôt ou trop tard</h2>
-          <span class="problem">Point délicat :</span>
-          <p>
-            Pour que GitHub valide correctement le domaine personnalisé, le proxy Cloudflare devait d’abord
-            rester désactivé, c’est-à-dire en mode <strong>DNS only</strong> avec le nuage gris.
-          </p>
-
-          <span class="solution">Ce que j’ai compris :</span>
-          <p>
-            La bonne logique est : créer le CNAME, laisser le proxy désactivé, configurer le custom domain
-            dans GitHub Pages, attendre la validation, puis revenir dans Cloudflare pour activer le proxy
-            orange. À partir de ce moment, Cloudflare devient vraiment le reverse proxy.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>06 / Mauvaise configuration DNS</h2>
-          <span class="problem">Ce qui s’est passé :</span>
-          <p>
-            À un moment, une erreur dans les enregistrements DNS a rendu le site inaccessible. Cela montre
-            qu’une petite erreur dans un CNAME ou dans le proxy status peut casser tout l’accès au site.
-          </p>
-
-          <span class="solution">Ce que j’ai corrigé :</span>
-          <p>
-            Les enregistrements ont été vérifiés et corrigés pour faire pointer
-            <strong>www.thibault-esr-itscm.xyz</strong> et le domaine racine vers
-            <strong>regalia00.github.io</strong>. Une fois les records DNS cohérents, le site a de nouveau
-            répondu correctement.
-          </p>
-        </article>
-
-        <article class="note terminal">
-          <h2>07 / Règles WAF plus compliquées que prévu</h2>
-          <span class="problem">Ce qui a été difficile :</span>
-          <p>
-            Créer les règles Cloudflare n’était pas aussi simple que prévu. Il fallait choisir le bon champ,
-            le bon opérateur, la bonne action et surtout comprendre dans quel ordre les règles étaient lues.
-          </p>
-
-          <span class="solution">Ce que j’ai compris :</span>
-          <p>
-            Une règle WAF fonctionne comme une condition : si la requête correspond, Cloudflare applique
-            l’action. Par exemple, <strong>URI Path equals /page2.html</strong> permet de cibler précisément
-            une page. Il faut donc bien réfléchir à la logique avant de créer la règle.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>08 / Conflit entre règles Cloudflare</h2>
-          <span class="problem">Erreur rencontrée :</span>
-          <p>
-            Une règle bloquait tous les navigateurs Chrome, alors qu’une autre règle devait justement
-            autoriser certains utilisateurs Chrome belges avec un challenge. Les deux règles se contredisaient.
-          </p>
-
-          <span class="solution">Ce que j’ai appris :</span>
-          <p>
-            L’ordre et la logique des règles sont essentiels. Une règle trop générale peut empêcher une
-            règle plus précise de fonctionner. Il faut donc placer les exceptions avant les blocages généraux
-            ou désactiver les règles qui entrent en conflit.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>09 / Filtrage par cookie</h2>
-          <span class="problem">Ce qui posait question :</span>
-          <p>
-            Le labo demandait de filtrer sur base d’un cookie <strong>superadmin=yes</strong>, mais le site
-            étant statique, il n’y avait aucun serveur capable de créer automatiquement ce cookie.
-          </p>
-
-          <span class="solution">Ce que j’ai fait :</span>
-          <p>
-            Le cookie a été créé manuellement depuis les Developer Tools du navigateur avec la commande :
-          </p>
-          <pre>document.cookie="superadmin=yes"</pre>
-          <p>
-            Ensuite, une règle Cloudflare a été créée pour bloquer l’accès à une page si ce cookie n’était
-            pas présent. Cela montre bien que Cloudflare peut lire les cookies envoyés dans les requêtes HTTP.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>10 / Sécurité réelle des cookies</h2>
-          <span class="problem">Limite importante :</span>
-          <p>
-            En créant le cookie manuellement, on voit directement qu’un cookie côté client peut être modifié
-            par l’utilisateur. Ce n’est donc pas une vraie authentification sécurisée.
-          </p>
-
-          <span class="solution">Ce que j’ai retenu :</span>
-          <p>
-            Dans ce labo, le cookie sert surtout à comprendre le principe. Dans un vrai site, un cookie
-            d’authentification devrait être généré par le serveur, signé, protégé et lié à une vraie session.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>11 / Redirection des sous-domaines</h2>
-          <span class="problem">Ce qui était piégeux :</span>
-          <p>
-            La consigne demandait de rediriger les sous-domaines <strong>xena</strong> et <strong>xyz</strong>
-            vers <strong>www</strong>, tout en conservant l’URI. Il ne fallait donc pas simplement rediriger
-            vers la page d’accueil.
-          </p>
-
-          <span class="solution">Solution appliquée :</span>
-          <p>
-            Une règle de redirection dynamique a été utilisée dans Cloudflare :
-          </p>
-          <pre>concat("https://www.thibault-esr-itscm.xyz", http.request.uri.path)</pre>
-          <p>
-            Grâce à cela, une URL comme <strong>xena.thibault-esr-itscm.xyz/page1.html</strong>
-            redirige bien vers <strong>www.thibault-esr-itscm.xyz/page1.html</strong>.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>12 / Ancienne syntaxe de redirection non valide</h2>
-          <span class="problem">Ce qui s’est passé :</span>
-          <p>
-            La syntaxe simple avec une variable comme <strong>${uri}</strong> ne fonctionnait pas dans
-            l’interface moderne de Cloudflare.
-          </p>
-
-          <span class="solution">Ce que j’ai compris :</span>
-          <p>
-            Cloudflare utilise maintenant son propre langage d’expression pour certaines règles.
-            Il faut donc utiliser des variables comme <strong>http.request.uri.path</strong> et une fonction
-            comme <strong>concat()</strong> pour reconstruire dynamiquement l’URL finale.
-          </p>
-        </article>
-      </div>
-
-      <section class="commands">
-        <h2>Commandes & vérifications utiles</h2>
-
-        <pre>nslookup
-server 9.9.9.9
-set type=NS
-thibault-esr-itscm.xyz</pre>
-
-        <pre>ipconfig /flushdns</pre>
-
-        <pre>curl -I https://www.thibault-esr-itscm.xyz</pre>
-
-        <pre>document.cookie="superadmin=yes"</pre>
-
-        <pre>concat("https://www.thibault-esr-itscm.xyz", http.request.uri.path)</pre>
+      <section class="summary">
+        <h2>Ce qu’il faut retenir</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <strong>DNS</strong>
+            <p>Le domaine doit savoir vers qui diriger le trafic.</p>
+          </div>
+          <div class="flow-step">
+            <strong>Proxy</strong>
+            <p>Cloudflare se place devant le site réel.</p>
+          </div>
+          <div class="flow-step">
+            <strong>WAF</strong>
+            <p>Les règles filtrent les requêtes avant l’hébergement.</p>
+          </div>
+          <div class="flow-step">
+            <strong>Cookies</strong>
+            <p>Ils peuvent être utilisés pour créer des règles d’accès.</p>
+          </div>
+          <div class="flow-step">
+            <strong>Redirection</strong>
+            <p>Cloudflare peut renvoyer une URL vers une autre destination.</p>
+          </div>
+        </div>
       </section>
     </section>
   </main>
