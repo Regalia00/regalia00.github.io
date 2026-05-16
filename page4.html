@@ -375,8 +375,8 @@
       <div class="intro">
         <p>
           Cette page regroupe les notions théoriques importantes rencontrées pendant le laboratoire.
-          Elle ne reprend pas toutes les manipulations pas à pas, mais explique les concepts nécessaires
-          pour comprendre le fonctionnement global du projet.
+          Elle explique les concepts nécessaires pour comprendre le fonctionnement global du projet :
+          DNS, CNAME, reverse proxy, HTTPS, WAF, cookies et redirections.
         </p>
         <p>
           Les éléments en vert correspondent aux champs, opérateurs ou actions réellement utilisés pendant
@@ -501,142 +501,203 @@ ALORS appliquer action</pre>
         </article>
 
         <article class="theory-card large">
-          <h2>07 / Champs disponibles dans Cloudflare WAF</h2>
+          <h2>07 / Champs les plus utilisés dans les règles WAF</h2>
+          <p>
+            Cloudflare permet d’utiliser de nombreux champs provenant de la requête HTTP.
+            Le tableau reprend les plus génériques ainsi que ceux rencontrés pendant le laboratoire.
+          </p>
 
           <table>
             <tr>
               <th>Champ</th>
               <th>Utilisé</th>
               <th>Rôle</th>
+              <th>Exemple</th>
             </tr>
             <tr>
               <td class="used">URI Path</td>
               <td><span class="badge-used">✓</span></td>
-              <td>Filtrer une page précise, par exemple /page2.html.</td>
+              <td>Filtrer une page précise.</td>
+              <td>/page2.html</td>
             </tr>
             <tr>
               <td class="used">Country</td>
               <td><span class="badge-used">✓</span></td>
               <td>Filtrer selon le pays d’origine de l’adresse IP.</td>
+              <td>Belgium</td>
             </tr>
             <tr>
               <td class="used">User-Agent</td>
               <td><span class="badge-used">✓</span></td>
-              <td>Identifier le navigateur ou certains outils automatisés.</td>
+              <td>Identifier un navigateur ou un outil.</td>
+              <td>Chrome</td>
             </tr>
             <tr>
               <td class="used">Cookie</td>
               <td><span class="badge-used">✓</span></td>
-              <td>Filtrer selon une valeur envoyée par le navigateur.</td>
+              <td>Vérifier la présence d’un cookie.</td>
+              <td>superadmin=yes</td>
             </tr>
             <tr>
               <td class="unused">IP Source Address</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Filtrer une adresse IP précise ou une plage IP.</td>
+              <td>Bloquer ou autoriser une IP précise.</td>
+              <td>192.168.x.x</td>
             </tr>
             <tr>
               <td class="unused">Hostname</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Cibler un domaine ou un sous-domaine précis.</td>
+              <td>Filtrer selon le domaine ou sous-domaine.</td>
+              <td>xena.example.xyz</td>
             </tr>
             <tr>
-              <td class="unused">HTTP Method</td>
+              <td class="unused">Request Method</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Filtrer selon GET, POST, PUT, DELETE, etc.</td>
+              <td>Filtrer selon GET, POST, PUT, DELETE, etc.</td>
+              <td>POST</td>
             </tr>
             <tr>
               <td class="unused">Referer</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Analyser la page d’origine ayant envoyé le visiteur.</td>
+              <td>Analyser la page précédente.</td>
+              <td>google.com</td>
             </tr>
             <tr>
-              <td class="unused">Query String</td>
+              <td class="unused">Header</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Filtrer selon les paramètres de l’URL, par exemple ?id=1.</td>
+              <td>Analyser un en-tête HTTP spécifique.</td>
+              <td>Accept-Language</td>
             </tr>
             <tr>
-              <td class="unused">Headers HTTP</td>
+              <td class="unused">X-Forwarded-For</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Analyser d’autres en-têtes envoyés par le navigateur.</td>
+              <td>Identifier une IP d’origine derrière un proxy.</td>
+              <td>203.xxx.xxx.xxx</td>
             </tr>
             <tr>
-              <td class="unused">ASN</td>
+              <td class="unused">SSL / HTTPS</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Filtrer selon le fournisseur réseau ou l’opérateur Internet.</td>
+              <td>Tester si la requête utilise HTTPS.</td>
+              <td>HTTPS = true</td>
             </tr>
             <tr>
-              <td class="unused">Bot Score</td>
+              <td class="unused">AS Number</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Évaluer la probabilité qu’une requête provienne d’un bot.</td>
-            </tr>
-            <tr>
-              <td class="unused">JA3 / TLS Fingerprint</td>
-              <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Identifier une empreinte TLS du client.</td>
+              <td>Identifier un fournisseur réseau.</td>
+              <td>AS12345</td>
             </tr>
           </table>
 
           <p class="mini">
-            Les champs utilisés dans le labo sont suffisants pour comprendre les bases du filtrage applicatif :
-            URL, pays, navigateur et cookie.
+            Les champs en vert correspondent aux éléments réellement utilisés dans le laboratoire :
+            URI Path, Country, User-Agent et Cookie.
           </p>
         </article>
 
-        <article class="theory-card">
-          <h2>08 / Opérateurs disponibles</h2>
+        <article class="theory-card large">
+          <h2>08 / Opérateurs de comparaison</h2>
+          <p>
+            Les opérateurs servent à comparer une valeur avec la requête reçue.
+            Ils déterminent quand une règle doit être appliquée.
+          </p>
 
           <table>
             <tr>
               <th>Opérateur</th>
               <th>Utilisé</th>
-              <th>Fonction</th>
+              <th>Rôle</th>
+              <th>Exemple</th>
             </tr>
             <tr>
               <td class="used">equals</td>
               <td><span class="badge-used">✓</span></td>
-              <td>La valeur doit être exactement identique.</td>
+              <td>Correspond exactement.</td>
+              <td>/page2.html</td>
             </tr>
             <tr>
               <td class="used">contains</td>
               <td><span class="badge-used">✓</span></td>
-              <td>La valeur doit contenir un texte précis.</td>
+              <td>Contient une valeur.</td>
+              <td>Chrome</td>
             </tr>
             <tr>
               <td class="used">does not contain</td>
               <td><span class="badge-used">✓</span></td>
-              <td>La valeur ne doit pas contenir un texte précis.</td>
+              <td>Ne contient pas une valeur.</td>
+              <td>superadmin=yes</td>
             </tr>
             <tr>
               <td class="unused">does not equal</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">La valeur doit être différente.</td>
+              <td>Est différent de.</td>
+              <td>Country ≠ Belgium</td>
             </tr>
             <tr>
               <td class="unused">starts with</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">La valeur commence par un texte donné.</td>
+              <td>Commence par.</td>
+              <td>/admin</td>
+            </tr>
+            <tr>
+              <td class="unused">does not start with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Ne commence pas par.</td>
+              <td>/api</td>
             </tr>
             <tr>
               <td class="unused">ends with</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">La valeur finit par un texte donné.</td>
+              <td>Finit par.</td>
+              <td>.html</td>
+            </tr>
+            <tr>
+              <td class="unused">does not end with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Ne finit pas par.</td>
+              <td>.php</td>
+            </tr>
+            <tr>
+              <td class="unused">is in</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Appartient à une liste.</td>
+              <td>BE, FR, NL</td>
+            </tr>
+            <tr>
+              <td class="unused">is not in</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>N’appartient pas à une liste.</td>
+              <td>US, RU</td>
             </tr>
             <tr>
               <td class="unused">matches regex</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">La valeur correspond à une expression régulière.</td>
+              <td>Correspond à une expression régulière.</td>
+              <td>^/admin.*</td>
             </tr>
             <tr>
-              <td class="unused">in</td>
+              <td class="unused">does not match regex</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">La valeur appartient à une liste définie.</td>
+              <td>Ne correspond pas à une expression régulière.</td>
+              <td>^bot.*</td>
             </tr>
             <tr>
-              <td class="unused">greater than / less than</td>
+              <td class="unused">wildcard</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Comparer des valeurs numériques.</td>
+              <td>Utilise * comme joker.</td>
+              <td>/admin/*</td>
+            </tr>
+            <tr>
+              <td class="unused">strict wildcard</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Wildcard plus strict.</td>
+              <td>/api/*</td>
             </tr>
           </table>
+
+          <p class="mini">
+            Les opérateurs utilisés dans ce laboratoire étaient principalement equals, contains
+            et does not contain.
+          </p>
         </article>
 
         <article class="theory-card">
@@ -649,41 +710,43 @@ ALORS appliquer action</pre>
               <th>Effet</th>
             </tr>
             <tr>
-              <td class="used">Block</td>
-              <td><span class="badge-used">✓</span></td>
-              <td>Bloque immédiatement l’accès à la ressource.</td>
-            </tr>
-            <tr>
               <td class="used">Managed Challenge</td>
               <td><span class="badge-used">✓</span></td>
-              <td>Demande une vérification gérée automatiquement par Cloudflare.</td>
+              <td>
+                Cloudflare décide automatiquement du niveau de vérification nécessaire.
+              </td>
             </tr>
             <tr>
-              <td class="unused">Allow</td>
-              <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Autorise explicitement une requête.</td>
+              <td class="used">Block</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Bloque immédiatement la requête et refuse l’accès.</td>
             </tr>
             <tr>
-              <td class="unused">JS Challenge</td>
+              <td class="unused">Non-interactive Challenge</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Vérifie que le client exécute JavaScript.</td>
+              <td>
+                Challenge invisible sans interaction utilisateur.
+              </td>
             </tr>
             <tr>
               <td class="unused">Interactive Challenge</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Demande une interaction explicite à l’utilisateur.</td>
+              <td>
+                Demande explicitement une interaction utilisateur, par exemple un CAPTCHA.
+              </td>
             </tr>
             <tr>
               <td class="unused">Skip</td>
               <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Ignore certaines protections ou règles.</td>
-            </tr>
-            <tr>
-              <td class="unused">Log</td>
-              <td><span class="badge-unused">✗</span></td>
-              <td class="unused">Journalise sans bloquer ni modifier la requête.</td>
+              <td>
+                Ignore certaines protections Cloudflare pour les requêtes correspondantes.
+              </td>
             </tr>
           </table>
+
+          <p class="mini">
+            Pendant ce laboratoire, seules les actions Block et Managed Challenge ont été utilisées.
+          </p>
         </article>
 
         <article class="theory-card large">
