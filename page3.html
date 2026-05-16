@@ -217,6 +217,16 @@
       font-weight: 500;
     }
 
+    pre {
+      overflow-x: auto;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,180,255,0.2);
+      padding: 14px;
+      color: #7dff58;
+      margin: 12px 0;
+      font-family: Consolas, monospace;
+    }
+
     .terminal {
       border-color: rgba(120,255,80,0.38);
       background: rgba(0,0,0,0.45);
@@ -231,6 +241,27 @@
       color: #8fa3ad !important;
       font-size: 0.9rem !important;
       margin-top: 10px;
+    }
+
+    .used {
+      color: #7dff58 !important;
+      font-weight: 600;
+    }
+
+    .unused {
+      color: #6b7882 !important;
+      opacity: 0.65;
+    }
+
+    .badge-used {
+      color: #7dff58;
+      font-family: Consolas, monospace;
+    }
+
+    .badge-unused {
+      color: #6b7882;
+      font-family: Consolas, monospace;
+      opacity: 0.75;
     }
 
     .summary {
@@ -289,6 +320,14 @@
         grid-column: span 1;
       }
     }
+
+    @media (max-width: 760px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
   </style>
 </head>
 
@@ -336,12 +375,13 @@
       <div class="intro">
         <p>
           Cette page regroupe les notions théoriques importantes rencontrées pendant le laboratoire.
-          Elle ne reprend pas toutes les manipulations pas à pas, mais explique les concepts nécessaires
-          pour comprendre le fonctionnement global du projet.
+          Elle explique les concepts nécessaires pour comprendre le fonctionnement global du projet :
+          DNS, CNAME, reverse proxy, HTTPS, WAF, cookies et redirections.
         </p>
         <p>
-          Les notions principales sont le DNS, les nameservers, les enregistrements CNAME,
-          le reverse proxy, le HTTPS, le WAF, les cookies, les User-Agents et les redirections HTTP.
+          Les éléments en vert correspondent aux champs, opérateurs ou actions réellement utilisés pendant
+          le labo. Les éléments en gris représentent des possibilités présentes dans Cloudflare, mais non
+          utilisées dans cette réalisation.
         </p>
       </div>
 
@@ -417,54 +457,342 @@
         </article>
 
         <article class="theory-card large">
-          <h2>06 / WAF Cloudflare</h2>
+          <h2>06 / Fonctionnement général d’une règle WAF</h2>
           <p>
-            Un WAF, ou Web Application Firewall, analyse les requêtes HTTP avant qu’elles atteignent
-            le serveur web. Il peut bloquer, défier ou laisser passer une requête selon des critères.
+            Une règle WAF Cloudflare suit une logique conditionnelle simple :
           </p>
+
+          <pre>SI condition vraie
+ALORS appliquer action</pre>
+
+          <p>
+            Une condition est construite à partir d’un champ, d’un opérateur et d’une valeur.
+            Plusieurs conditions peuvent être combinées avec <strong>AND</strong>, <strong>OR</strong>
+            ou <strong>NOT</strong>.
+          </p>
+
           <table>
             <tr>
-              <th>Champ</th>
+              <th>Élément</th>
               <th>Rôle</th>
-              <th>Exemple d’utilisation</th>
+              <th>Exemple</th>
             </tr>
             <tr>
-              <td>URI Path</td>
-              <td>Filtrer une page précise</td>
-              <td>Bloquer /page2.html</td>
+              <td>Champ</td>
+              <td>Information analysée dans la requête</td>
+              <td>URI Path, Country, Cookie</td>
             </tr>
             <tr>
-              <td>Country</td>
-              <td>Filtrer selon le pays de l’adresse IP</td>
-              <td>Bloquer les IP américaines</td>
+              <td>Opérateur</td>
+              <td>Façon de comparer la valeur</td>
+              <td>equals, contains, does not contain</td>
             </tr>
             <tr>
-              <td>User-Agent</td>
-              <td>Identifier navigateur, bot ou outil</td>
-              <td>Détecter Chrome, curl ou sqlmap</td>
+              <td>Action</td>
+              <td>Réaction appliquée par Cloudflare</td>
+              <td>Block, Managed Challenge</td>
             </tr>
             <tr>
-              <td>Cookie</td>
-              <td>Lire une valeur envoyée par le navigateur</td>
-              <td>Autoriser superadmin=yes</td>
+              <td>Logique</td>
+              <td>Combinaison de conditions</td>
+              <td>AND / OR / NOT</td>
             </tr>
           </table>
         </article>
 
-        <article class="theory-card">
-          <h2>07 / Ordre des règles</h2>
+        <article class="theory-card large">
+          <h2>07 / Champs les plus utilisés dans les règles WAF</h2>
           <p>
-            L’ordre des règles est très important. Cloudflare les évalue de haut en bas.
-            Une règle trop générale placée trop haut peut bloquer une règle plus précise.
+            Cloudflare permet d’utiliser de nombreux champs provenant de la requête HTTP.
+            Le tableau reprend les plus génériques ainsi que ceux rencontrés pendant le laboratoire.
           </p>
+
+          <table>
+            <tr>
+              <th>Champ</th>
+              <th>Utilisé</th>
+              <th>Rôle</th>
+              <th>Exemple</th>
+            </tr>
+            <tr>
+              <td class="used">URI Path</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Filtrer une page précise.</td>
+              <td>/page2.html</td>
+            </tr>
+            <tr>
+              <td class="used">Country</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Filtrer selon le pays d’origine de l’adresse IP.</td>
+              <td>Belgium</td>
+            </tr>
+            <tr>
+              <td class="used">User-Agent</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Identifier un navigateur ou un outil.</td>
+              <td>Chrome</td>
+            </tr>
+            <tr>
+              <td class="used">Cookie</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Vérifier la présence d’un cookie.</td>
+              <td>superadmin=yes</td>
+            </tr>
+            <tr>
+              <td class="unused">IP Source Address</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Bloquer ou autoriser une IP précise.</td>
+              <td>192.168.x.x</td>
+            </tr>
+            <tr>
+              <td class="unused">Hostname</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Filtrer selon le domaine ou sous-domaine.</td>
+              <td>xena.example.xyz</td>
+            </tr>
+            <tr>
+              <td class="unused">Request Method</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Filtrer selon GET, POST, PUT, DELETE, etc.</td>
+              <td>POST</td>
+            </tr>
+            <tr>
+              <td class="unused">Referer</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Analyser la page précédente.</td>
+              <td>google.com</td>
+            </tr>
+            <tr>
+              <td class="unused">Header</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Analyser un en-tête HTTP spécifique.</td>
+              <td>Accept-Language</td>
+            </tr>
+            <tr>
+              <td class="unused">X-Forwarded-For</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Identifier une IP d’origine derrière un proxy.</td>
+              <td>203.xxx.xxx.xxx</td>
+            </tr>
+            <tr>
+              <td class="unused">SSL / HTTPS</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Tester si la requête utilise HTTPS.</td>
+              <td>HTTPS = true</td>
+            </tr>
+            <tr>
+              <td class="unused">AS Number</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Identifier un fournisseur réseau.</td>
+              <td>AS12345</td>
+            </tr>
+          </table>
+
+          <p class="mini">
+            Les champs en vert correspondent aux éléments réellement utilisés dans le laboratoire :
+            URI Path, Country, User-Agent et Cookie.
+          </p>
+        </article>
+
+        <article class="theory-card large">
+          <h2>08 / Opérateurs de comparaison</h2>
           <p>
-            Par exemple, une règle qui bloque tous les navigateurs Chrome peut empêcher une autre
-            règle d’autoriser les utilisateurs belges utilisant Chrome.
+            Les opérateurs servent à comparer une valeur avec la requête reçue.
+            Ils déterminent quand une règle doit être appliquée.
+          </p>
+
+          <table>
+            <tr>
+              <th>Opérateur</th>
+              <th>Utilisé</th>
+              <th>Rôle</th>
+              <th>Exemple</th>
+            </tr>
+            <tr>
+              <td class="used">equals</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Correspond exactement.</td>
+              <td>/page2.html</td>
+            </tr>
+            <tr>
+              <td class="used">contains</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Contient une valeur.</td>
+              <td>Chrome</td>
+            </tr>
+            <tr>
+              <td class="used">does not contain</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Ne contient pas une valeur.</td>
+              <td>superadmin=yes</td>
+            </tr>
+            <tr>
+              <td class="unused">does not equal</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Est différent de.</td>
+              <td>Country ≠ Belgium</td>
+            </tr>
+            <tr>
+              <td class="unused">starts with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Commence par.</td>
+              <td>/admin</td>
+            </tr>
+            <tr>
+              <td class="unused">does not start with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Ne commence pas par.</td>
+              <td>/api</td>
+            </tr>
+            <tr>
+              <td class="unused">ends with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Finit par.</td>
+              <td>.html</td>
+            </tr>
+            <tr>
+              <td class="unused">does not end with</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Ne finit pas par.</td>
+              <td>.php</td>
+            </tr>
+            <tr>
+              <td class="unused">is in</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Appartient à une liste.</td>
+              <td>BE, FR, NL</td>
+            </tr>
+            <tr>
+              <td class="unused">is not in</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>N’appartient pas à une liste.</td>
+              <td>US, RU</td>
+            </tr>
+            <tr>
+              <td class="unused">matches regex</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Correspond à une expression régulière.</td>
+              <td>^/admin.*</td>
+            </tr>
+            <tr>
+              <td class="unused">does not match regex</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Ne correspond pas à une expression régulière.</td>
+              <td>^bot.*</td>
+            </tr>
+            <tr>
+              <td class="unused">wildcard</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Utilise * comme joker.</td>
+              <td>/admin/*</td>
+            </tr>
+            <tr>
+              <td class="unused">strict wildcard</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>Wildcard plus strict.</td>
+              <td>/api/*</td>
+            </tr>
+          </table>
+
+          <p class="mini">
+            Les opérateurs utilisés dans ce laboratoire étaient principalement equals, contains
+            et does not contain.
           </p>
         </article>
 
         <article class="theory-card">
-          <h2>08 / Cookies</h2>
+          <h2>09 / Actions Cloudflare</h2>
+
+          <table>
+            <tr>
+              <th>Action</th>
+              <th>Utilisé</th>
+              <th>Effet</th>
+            </tr>
+            <tr>
+              <td class="used">Managed Challenge</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>
+                Cloudflare décide automatiquement du niveau de vérification nécessaire.
+              </td>
+            </tr>
+            <tr>
+              <td class="used">Block</td>
+              <td><span class="badge-used">✓</span></td>
+              <td>Bloque immédiatement la requête et refuse l’accès.</td>
+            </tr>
+            <tr>
+              <td class="unused">Non-interactive Challenge</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>
+                Challenge invisible sans interaction utilisateur.
+              </td>
+            </tr>
+            <tr>
+              <td class="unused">Interactive Challenge</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>
+                Demande explicitement une interaction utilisateur, par exemple un CAPTCHA.
+              </td>
+            </tr>
+            <tr>
+              <td class="unused">Skip</td>
+              <td><span class="badge-unused">✗</span></td>
+              <td>
+                Ignore certaines protections Cloudflare pour les requêtes correspondantes.
+              </td>
+            </tr>
+          </table>
+
+          <p class="mini">
+            Pendant ce laboratoire, seules les actions Block et Managed Challenge ont été utilisées.
+          </p>
+        </article>
+
+        <article class="theory-card large">
+          <h2>10 / Règles réellement créées pendant le labo</h2>
+
+          <table>
+            <tr>
+              <th>Objectif</th>
+              <th>Condition</th>
+              <th>Action</th>
+            </tr>
+            <tr>
+              <td>Bloquer une page</td>
+              <td>URI Path equals /page2.html</td>
+              <td>Block</td>
+            </tr>
+            <tr>
+              <td>Geoblocking</td>
+              <td>Country equals United States AND URI Path equals /page1.html</td>
+              <td>Block</td>
+            </tr>
+            <tr>
+              <td>Bloquer Chrome</td>
+              <td>User-Agent contains Chrome</td>
+              <td>Block</td>
+            </tr>
+            <tr>
+              <td>Challenge Chrome belge</td>
+              <td>Country equals Belgium AND User-Agent contains Chrome AND URI Path equals /page2.html</td>
+              <td>Managed Challenge</td>
+            </tr>
+            <tr>
+              <td>Filtrage cookie</td>
+              <td>URI Path equals /page2.html AND NOT Cookie contains superadmin=yes</td>
+              <td>Block</td>
+            </tr>
+          </table>
+
+          <p class="mini">
+            Ces règles montrent l’usage des principales possibilités du WAF : filtrage par URL,
+            géolocalisation IP, navigateur, challenge et cookie.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>11 / Cookies</h2>
           <p>
             Un cookie est une donnée stockée côté navigateur et envoyée automatiquement dans les
             requêtes HTTP. Il peut contenir une valeur servant à identifier une session ou un rôle.
@@ -480,7 +808,7 @@
         </article>
 
         <article class="theory-card terminal">
-          <h2>09 / Redirections HTTP</h2>
+          <h2>12 / Redirections HTTP</h2>
           <p>
             Une redirection HTTP indique au navigateur qu’il doit aller vers une autre URL.
             Cloudflare peut générer cette redirection avant que la requête n’atteigne GitHub Pages.
@@ -492,7 +820,7 @@
         </article>
 
         <article class="theory-card">
-          <h2>10 / DNS ≠ Redirection</h2>
+          <h2>13 / DNS ≠ Redirection</h2>
           <p>
             Le DNS sert à indiquer vers quel service envoyer une requête. Une redirection HTTP,
             elle, indique au navigateur de changer d’URL.
