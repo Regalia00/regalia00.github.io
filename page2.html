@@ -261,33 +261,34 @@
     }
   </style>
 </head>
+
 <body>
   <main class="layout">
     <aside class="sidebar">
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>00</span>
+        <span>01</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link" href="page1.html">
-        <span>01</span>
+        <span>02</span>
         <p>Labo Cloud Reverse Proxy</p>
       </a>
 
       <a class="nav-link active" href="page2.html">
-        <span>02</span>
+        <span>03</span>
         <p>Projet</p>
       </a>
 
       <a class="nav-link" href="page3.html">
-        <span>03</span>
+        <span>04</span>
         <p>Théorie</p>
       </a>
 
       <a class="nav-link" href="page4.html">
-        <span>04</span>
+        <span>05</span>
         <p>Notes techniques</p>
       </a>
     </aside>
@@ -299,19 +300,18 @@
           <h1>Projet</h1>
         </div>
 
-        <div class="status">Plan du labo</div>
+        <div class="status">Projet réalisé</div>
       </div>
 
       <div class="intro">
         <p>
-          Cette page explique ce qui va être réalisé dans le projet et surtout ce que chaque
-          partie doit permettre de comprendre. Le but n’est pas seulement de construire un site,
-          mais de voir comment plusieurs services travaillent ensemble pour rendre ce site accessible,
-          propre et plus sécurisé.
+          Cette page présente les grandes étapes concrètes du projet réalisé pendant le laboratoire.
+          L’objectif était de construire un site web statique, de l’associer à un nom de domaine
+          personnalisé, puis de le protéger avec Cloudflare.
         </p>
         <p>
-          Le projet est découpé en plusieurs blocs : le domaine, le DNS, l’hébergement,
-          Cloudflare, le reverse proxy et le WAF. Chaque bloc a son importance dans le résultat final.
+          Le projet a permis de manipuler plusieurs éléments essentiels d’une infrastructure web :
+          nom de domaine, DNS, GitHub Pages, reverse proxy, HTTPS, WAF, cookies et redirections.
         </p>
       </div>
 
@@ -319,101 +319,108 @@
         <article class="chapter large">
           <h2>01 / Finalité du projet</h2>
           <p>
-            La finalité est de mettre en place un site web public accessible avec un nom de domaine
-            personnalisé, puis de le faire passer par Cloudflare avant qu’il atteigne l’hébergement réel.
+            La finalité était de rendre le site accessible via le domaine
+            <strong>www.thibault-esr-itscm.xyz</strong>, tout en faisant passer le trafic par
+            Cloudflare avant d’atteindre l’hébergement GitHub Pages.
           </p>
           <p>
-            Ce montage permet de comprendre une idée importante : un site visible sur Internet
-            n’est pas forcément contacté directement. Il peut être protégé par une couche intermédiaire
-            qui analyse et contrôle le trafic.
+            Ce montage permet de comprendre qu’un site web public peut être protégé par une couche
+            intermédiaire qui inspecte, filtre et redirige les requêtes.
           </p>
         </article>
 
         <article class="chapter">
-          <h2>02 / Achat du nom de domaine</h2>
+          <h2>02 / Nom de domaine</h2>
           <p>
-            Le nom de domaine est le point d’entrée du projet. Sans lui, le site reste accessible
-            via une adresse technique peu lisible. Avec un domaine, on obtient une adresse plus claire
-            et plus professionnelle.
+            Le domaine <strong>thibault-esr-itscm.xyz</strong> a été acheté sur Namecheap.
+            Le service proposé initialement dans le labo n’étant pas utilisable, Namecheap a servi
+            d’alternative pour obtenir rapidement un domaine fonctionnel.
           </p>
           <ul>
-            <li>Comprendre le rôle d’un domaine</li>
-            <li>Relier un nom humain à un service web</li>
-            <li>Préparer la gestion DNS via Cloudflare</li>
+            <li>Achat du domaine</li>
+            <li>Validation ICANN par email</li>
+            <li>Désactivation du renouvellement automatique</li>
           </ul>
         </article>
 
         <article class="chapter">
           <h2>03 / Gestion DNS</h2>
           <p>
-            Le DNS sert à faire le lien entre le nom de domaine et la destination du trafic.
-            Dans le projet, Cloudflare devient le gestionnaire DNS principal grâce au changement
-            des nameservers.
-          </p>
-          <p>
-            Cette partie permet de comprendre que le DNS agit comme une sorte d’annuaire d’Internet.
-          </p>
-        </article>
-
-        <article class="chapter">
-          <h2>04 / Hébergement du site</h2>
-          <p>
-            Le site est hébergé comme un site statique. Cela signifie qu’il contient principalement
-            des fichiers HTML, CSS et éventuellement JavaScript, sans base de données ni backend complexe.
+            Après l’ajout du domaine dans Cloudflare, les nameservers Cloudflare ont été configurés
+            chez Namecheap. Cloudflare est ainsi devenu responsable de la zone DNS.
           </p>
           <ul>
-            <li>Créer les pages du site</li>
-            <li>Comprendre GitHub Pages</li>
-            <li>Publier des fichiers web sur Internet</li>
+            <li>Nameservers : conrad.ns.cloudflare.com et lorna.ns.cloudflare.com</li>
+            <li>Vérification avec nslookup</li>
+            <li>Création des enregistrements CNAME</li>
           </ul>
         </article>
 
         <article class="chapter">
-          <h2>05 / Cloudflare</h2>
+          <h2>04 / Hébergement GitHub Pages</h2>
           <p>
-            Cloudflare est la couche placée devant le site. Son intérêt est de centraliser plusieurs
-            fonctions importantes : DNS, HTTPS, protection, cache et filtrage.
+            Le site a été hébergé avec GitHub Pages à partir du repository
+            <strong>regalia00.github.io</strong>. Les pages HTML ont été créées et modifiées
+            localement, puis envoyées vers GitHub.
           </p>
+          <ul>
+            <li>Création du fichier index.html</li>
+            <li>Création de pages supplémentaires</li>
+            <li>Activation de GitHub Pages</li>
+          </ul>
+        </article>
+
+        <article class="chapter">
+          <h2>05 / Connexion domaine - GitHub</h2>
           <p>
-            Dans le projet, Cloudflare permet surtout de comprendre comment un service externe peut
-            protéger un site sans modifier directement les fichiers hébergés.
+            Des enregistrements CNAME ont été créés dans Cloudflare afin de relier le domaine
+            personnalisé à GitHub Pages.
           </p>
+          <ul>
+            <li>CNAME www vers regalia00.github.io</li>
+            <li>CNAME racine vers regalia00.github.io</li>
+            <li>Configuration du custom domain dans GitHub Pages</li>
+          </ul>
         </article>
 
         <article class="chapter terminal">
-          <h2>06 / Proxy & Reverse Proxy</h2>
+          <h2>06 / Reverse Proxy Cloudflare</h2>
           <p>
-            Un proxy classique agit souvent pour le client, alors qu’un reverse proxy agit devant
-            le serveur. Ici, Cloudflare reçoit les requêtes des visiteurs avant de les transmettre
-            au site hébergé.
+            Le proxy Cloudflare a été activé grâce au mode <strong>Proxied</strong> représenté
+            par le nuage orange. À partir de ce moment, Cloudflare intercepte les requêtes avant
+            GitHub Pages.
           </p>
           <p>
-            C’est cette logique qui rend le reverse proxy intéressant : il devient un point de passage
-            obligatoire, donc un point de contrôle.
-          </p>
-        </article>
-
-        <article class="chapter">
-          <h2>07 / HTTPS & certificats</h2>
-          <p>
-            Le HTTPS permet de chiffrer les échanges entre le navigateur et le site. Dans le projet,
-            cette partie permet de comprendre pourquoi un cadenas apparaît dans le navigateur et pourquoi
-            les certificats sont importants.
-          </p>
-          <p>
-            La sécurité ne se voit pas toujours, mais elle change la manière dont les données circulent.
+            Cela permet d’utiliser HTTPS, le cache, les règles WAF et les règles de redirection.
           </p>
         </article>
 
         <article class="chapter">
-          <h2>08 / WAF et règles de sécurité</h2>
+          <h2>07 / Règles WAF réalisées</h2>
           <p>
-            Le WAF permet de créer des règles pour contrôler l’accès au site. On peut par exemple
-            bloquer une page précise, filtrer selon un pays, un navigateur, une IP ou certains comportements.
+            Plusieurs règles de sécurité ont été créées pour répondre aux consignes du labo.
+          </p>
+          <ul>
+            <li>Blocage de page2.html</li>
+            <li>Blocage de page1.html pour les IP américaines</li>
+            <li>Blocage des navigateurs basés sur Chrome</li>
+            <li>Challenge pour les utilisateurs belges avec Chrome</li>
+            <li>Filtrage par cookie superadmin=yes</li>
+          </ul>
+        </article>
+
+        <article class="chapter">
+          <h2>08 / Redirections</h2>
+          <p>
+            Des règles de redirection ont été configurées pour rediriger une page fictive vers
+            un site externe, puis pour rediriger les sous-domaines
+            <strong>xyz</strong> et <strong>xena</strong> vers le sous-domaine
+            <strong>www</strong>.
           </p>
           <p>
-            Cette partie montre que le reverse proxy ne sert pas seulement à rediriger le trafic :
-            il peut aussi devenir une vraie couche de sécurité.
+            L’URI a été conservée pendant la redirection afin que
+            <strong>xena.thibault-esr-itscm.xyz/page1.html</strong> mène vers
+            <strong>www.thibault-esr-itscm.xyz/page1.html</strong>.
           </p>
         </article>
       </div>
@@ -423,23 +430,27 @@
         <div class="steps">
           <div class="step">
             <strong>01 / Domaine</strong>
-            <p>Obtenir une adresse publique claire pour le site.</p>
+            <p>Achat du domaine et validation ICANN.</p>
           </div>
+
           <div class="step">
             <strong>02 / DNS</strong>
-            <p>Comprendre comment le domaine dirige le trafic.</p>
+            <p>Remplacement des nameservers Namecheap par ceux de Cloudflare.</p>
           </div>
+
           <div class="step">
-            <strong>03 / Hébergement</strong>
-            <p>Publier les pages web avec un hébergement statique.</p>
+            <strong>03 / GitHub Pages</strong>
+            <p>Création du site statique et publication du repository.</p>
           </div>
+
           <div class="step">
             <strong>04 / Reverse Proxy</strong>
-            <p>Faire passer les visiteurs par Cloudflare avant le site.</p>
+            <p>Activation du proxy Cloudflare avec le mode Proxied.</p>
           </div>
+
           <div class="step">
             <strong>05 / Sécurité</strong>
-            <p>Ajouter HTTPS, filtrage et règles WAF.</p>
+            <p>Création des règles WAF, cookies, CAPTCHA et redirections.</p>
           </div>
         </div>
       </section>

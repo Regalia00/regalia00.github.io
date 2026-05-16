@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Labo Cloud Reverse Proxy</title>
+
   <style>
     * {
       margin: 0;
@@ -262,181 +263,243 @@
     }
   </style>
 </head>
+
 <body>
+
   <main class="layout">
+
     <aside class="sidebar">
+
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>00</span>
+        <span>01</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link active" href="page1.html">
-        <span>01</span>
+        <span>02</span>
         <p>Labo Cloud Reverse Proxy</p>
       </a>
 
       <a class="nav-link" href="page2.html">
-        <span>02</span>
+        <span>03</span>
         <p>Projet</p>
       </a>
 
       <a class="nav-link" href="page3.html">
-        <span>03</span>
+        <span>04</span>
         <p>Théorie</p>
       </a>
 
       <a class="nav-link" href="page4.html">
-        <span>04</span>
+        <span>05</span>
         <p>Notes techniques</p>
       </a>
+
     </aside>
 
     <section class="content">
+
       <div class="header">
+
         <div>
           <p class="eyebrow">Infrastructure cloud & réseau</p>
           <h1>Labo Cloud Reverse Proxy</h1>
         </div>
 
-        <div class="status">Labo en cours</div>
+        <div class="status">
+          Reverse Proxy actif
+        </div>
+
       </div>
 
       <div class="intro">
+
         <p>
-          Cette page résume le laboratoire Cloud Reverse Proxy avec un regard plus personnel.
-          Le but n’est pas uniquement de suivre des étapes, mais de comprendre pourquoi chaque
-          élément est nécessaire dans une infrastructure web moderne.
+          Cette page présente le laboratoire Cloud Reverse Proxy réalisé avec GitHub Pages,
+          Cloudflare et un nom de domaine personnalisé. Le but du laboratoire est de comprendre
+          comment une requête web circule entre le navigateur d’un utilisateur, le DNS,
+          Cloudflare et le serveur d’origine.
         </p>
+
         <p>
-          Au final, le site n’est plus simplement hébergé quelque part : il passe par une couche
-          intermédiaire qui gère le DNS, le HTTPS, le filtrage et la protection avant d’arriver
-          jusqu’à l’hébergement réel.
+          L’objectif n’était pas seulement d’obtenir un site fonctionnel, mais surtout de comprendre
+          le rôle de chaque composant utilisé pendant la mise en place du projet.
         </p>
+
       </div>
 
       <div class="grid">
+
         <article class="chapter large">
+
           <h2>01 / Objectif du laboratoire</h2>
+
           <p>
-            Le laboratoire sert à découvrir le fonctionnement de base d’un reverse proxy cloud.
-            C’est une manière concrète de voir ce qui se passe entre un navigateur, Cloudflare
-            et le serveur qui contient les fichiers du site.
+            Le laboratoire avait pour objectif de mettre en place un site web accessible via un
+            nom de domaine personnalisé, tout en utilisant Cloudflare comme reverse proxy.
           </p>
+
           <p>
-            Ce qui est important ici, ce n’est pas seulement que le site fonctionne, mais de
-            comprendre le rôle de chaque service utilisé pendant la mise en place.
+            Cela permet d’observer concrètement comment Cloudflare peut protéger, filtrer et
+            contrôler les requêtes avant qu’elles n’atteignent l’hébergement GitHub Pages.
           </p>
+
         </article>
 
         <article class="chapter">
-          <h2>02 / Nom de domaine</h2>
+
+          <h2>02 / Achat du nom de domaine</h2>
+
           <p>
-            Le nom de domaine donne une vraie adresse au site. Il évite d’utiliser directement
-            une adresse technique liée à l’hébergement et rend le projet plus propre.
+            Un nom de domaine a été acheté afin de disposer d’une adresse web personnalisée.
+            Cette étape permet également de masquer l’adresse technique GitHub Pages.
           </p>
+
           <ul>
-            <li>Adresse plus lisible pour les visiteurs</li>
-            <li>Point d’entrée public du site</li>
-            <li>Base nécessaire pour configurer Cloudflare</li>
+            <li>Adresse publique plus professionnelle</li>
+            <li>Base nécessaire pour utiliser Cloudflare</li>
+            <li>Validation ICANN obligatoire après achat</li>
           </ul>
+
         </article>
 
         <article class="chapter">
-          <h2>03 / Cloudflare</h2>
+
+          <h2>03 / GitHub Pages</h2>
+
           <p>
-            Cloudflare est placé entre le visiteur et le site. Il ne remplace pas l’hébergement,
-            mais il devient la première couche visible depuis Internet.
+            GitHub Pages sert d’hébergement pour le site statique HTML. Les fichiers du site
+            sont stockés dans un repository GitHub puis publiés automatiquement.
           </p>
+
           <p>
-            C’est ce qui permet ensuite d’ajouter de la sécurité, du HTTPS, du cache et des règles
-            de filtrage sans modifier directement le serveur d’origine.
+            Le site a été développé avec Notepad++ puis envoyé sur GitHub via upload manuel.
           </p>
+
         </article>
 
         <article class="chapter">
-          <h2>04 / DNS & Nameservers</h2>
+
+          <h2>04 / Configuration DNS</h2>
+
           <p>
-            Les DNS servent à indiquer où doit aller le trafic lorsqu’un utilisateur tape le nom
-            du site. En changeant les nameservers, on confie cette gestion à Cloudflare.
+            Après l’ajout du domaine dans Cloudflare, les nameservers fournis par Cloudflare
+            ont été configurés chez Namecheap.
           </p>
+
           <ul>
-            <li>Cloudflare devient responsable de la zone DNS</li>
-            <li>Les changements doivent se propager</li>
-            <li>La vérification peut se faire avec nslookup</li>
+            <li>Cloudflare devient gestionnaire DNS</li>
+            <li>Propagation DNS nécessaire</li>
+            <li>Création des enregistrements CNAME</li>
           </ul>
+
         </article>
 
         <article class="chapter">
-          <h2>05 / Hébergement GitHub Pages</h2>
+
+          <h2>05 / Reverse Proxy Cloudflare</h2>
+
           <p>
-            GitHub Pages permet d’héberger simplement un site statique. Dans ce labo,
-            il sert de serveur d’origine : c’est là que se trouvent les fichiers HTML.
+            Une fois le proxy Cloudflare activé, les visiteurs ne contactent plus directement
+            GitHub Pages. Toutes les requêtes passent d’abord par Cloudflare.
           </p>
+
           <p>
-            Le site reste simple, mais cela suffit pour comprendre le chemin suivi par les requêtes web.
+            Cela permet d’ajouter des protections WAF, du HTTPS et des règles de filtrage.
           </p>
+
         </article>
 
         <article class="chapter">
-          <h2>06 / CNAME & domaine personnalisé</h2>
+
+          <h2>06 / Règles WAF</h2>
+
           <p>
-            L’enregistrement CNAME permet de relier le sous-domaine public à l’hébergement.
-            GitHub doit aussi connaître le domaine personnalisé pour accepter d’afficher le site.
+            Plusieurs règles de sécurité ont été créées pendant le laboratoire afin de filtrer
+            les accès à certaines pages du site.
           </p>
-          <p>
-            Cette étape montre bien que le DNS et l’hébergement doivent être cohérents entre eux.
-          </p>
+
+          <ul>
+            <li>Blocage selon le pays</li>
+            <li>Filtrage User-Agent Chrome</li>
+            <li>Challenge CAPTCHA</li>
+            <li>Contrôle via cookies</li>
+          </ul>
+
         </article>
 
         <article class="chapter terminal">
-          <h2>07 / Activation du Reverse Proxy</h2>
+
+          <h2>07 / Filtrage par cookie</h2>
+
           <p>
-            Quand le nuage Cloudflare passe en mode proxy, les visiteurs ne contactent plus
-            directement l’hébergement. Ils passent d’abord par Cloudflare.
+            Une règle Cloudflare a été créée afin de bloquer l’accès à une page si un cookie
+            spécifique n’est pas présent dans la requête HTTP.
           </p>
+
           <p>
-            C’est à ce moment que le reverse proxy devient vraiment utile : il peut sécuriser,
-            filtrer et présenter le site en HTTPS.
+            Le cookie a été ajouté manuellement via les Developer Tools du navigateur avec :
           </p>
+
+          <p style="margin-top:10px; color:#7dff58;">
+            document.cookie="superadmin=yes"
+          </p>
+
         </article>
 
         <article class="chapter">
-          <h2>08 / Lien avec le WAF</h2>
+
+          <h2>08 / Redirections & sous-domaines</h2>
+
           <p>
-            Une fois le reverse proxy actif, on peut aller plus loin avec le WAF.
-            Le WAF permet de créer des règles pour contrôler l’accès à certaines pages,
-            selon l’URL, le pays, l’adresse IP ou le navigateur utilisé.
+            La dernière partie du laboratoire consistait à gérer les redirections
+            et les sous-domaines avec les Redirect Rules Cloudflare.
           </p>
+
           <p>
-            Cette partie montre pourquoi le reverse proxy est important : il devient un point de contrôle.
+            Cette étape permet de rediriger automatiquement certaines URLs
+            vers d’autres pages ou domaines.
           </p>
+
         </article>
+
       </div>
 
       <section class="schema">
+
         <h2>Chemin simplifié d’une requête</h2>
+
         <div class="flow">
+
           <div class="flow-step">
             <strong>01</strong>
-            <p>Le visiteur ouvre le site depuis son navigateur.</p>
+            <p>L’utilisateur ouvre le site depuis son navigateur.</p>
           </div>
+
           <div class="flow-step">
             <strong>02</strong>
-            <p>Le DNS indique que le trafic doit passer par Cloudflare.</p>
+            <p>Le DNS Cloudflare reçoit la requête.</p>
           </div>
+
           <div class="flow-step">
             <strong>03</strong>
-            <p>Cloudflare analyse, protège et relaie la requête.</p>
+            <p>Cloudflare applique les règles WAF et le proxy.</p>
           </div>
+
           <div class="flow-step">
             <strong>04</strong>
-            <p>GitHub Pages renvoie les fichiers du site.</p>
+            <p>GitHub Pages renvoie les fichiers HTML du site.</p>
           </div>
+
         </div>
+
       </section>
+
     </section>
+
   </main>
+
 </body>
 </html>

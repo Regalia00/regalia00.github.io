@@ -132,9 +132,15 @@
       white-space: nowrap;
     }
 
-    .intro {
+    .intro,
+    .note,
+    .commands,
+    .recap {
       border: 1px solid rgba(0,180,255,0.28);
       background: rgba(255,255,255,0.02);
+    }
+
+    .intro {
       padding: 24px;
       margin-bottom: 20px;
     }
@@ -150,14 +156,14 @@
       gap: 18px;
     }
 
-    .note {
+    .note,
+    .recap {
       position: relative;
       padding: 24px;
-      border: 1px solid rgba(0,180,255,0.28);
-      background: rgba(255,255,255,0.02);
     }
 
-    .note::before {
+    .note::before,
+    .recap::before {
       content: "";
       position: absolute;
       left: 0;
@@ -168,7 +174,9 @@
       opacity: 0.8;
     }
 
-    .note h2 {
+    .note h2,
+    .recap h2,
+    .commands h2 {
       color: #00b7ff;
       font-size: 1.05rem;
       text-transform: uppercase;
@@ -177,13 +185,16 @@
     }
 
     .note p,
-    .note li {
+    .note li,
+    .recap p,
+    .recap li {
       color: #d7e6ed;
       line-height: 1.65;
       font-size: 0.96rem;
     }
 
-    .note ul {
+    .note ul,
+    .recap ul {
       margin-left: 18px;
       margin-top: 10px;
     }
@@ -212,19 +223,51 @@
       color: #7dff58;
     }
 
-    .commands {
-      margin-top: 22px;
-      border: 1px solid rgba(0,180,255,0.28);
-      background: rgba(255,255,255,0.02);
-      padding: 24px;
+    .recap-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
     }
 
-    .commands h2 {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: rgba(0,0,0,0.28);
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      border: 1px solid rgba(0,180,255,0.24);
+      padding: 12px;
+      color: #d7e6ed;
+      line-height: 1.45;
+      font-size: 0.92rem;
+      vertical-align: top;
+    }
+
+    th {
       color: #00b7ff;
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-      margin-bottom: 18px;
-      font-size: 1rem;
+      font-family: Consolas, monospace;
+      text-align: left;
+      font-weight: 500;
+      background: rgba(0,180,255,0.06);
+    }
+
+    .ok {
+      color: #7dff58;
+      font-family: Consolas, monospace;
+    }
+
+    .warn {
+      color: #ffd166;
+      font-family: Consolas, monospace;
+    }
+
+    .commands {
+      margin-top: 22px;
+      padding: 24px;
     }
 
     pre {
@@ -246,6 +289,14 @@
         width: 100%;
         position: relative;
         top: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
       }
     }
   </style>
@@ -300,13 +351,186 @@
           et du WAF.
         </p>
         <p>
-          Le labo paraissait assez linéaire sur papier, mais en pratique plusieurs étapes ont demandé
-          de l’analyse : trouver une alternative pour le nom de domaine, attendre la propagation DNS,
-          comprendre les règles Cloudflare, corriger les conflits WAF et adapter les redirections.
+          Elle sert aussi de rapport technique sous forme de site web. Les tableaux remplacent certaines
+          captures d’écran en résumant clairement la configuration DNS, les règles WAF, les redirections
+          et les tests réalisés.
         </p>
       </div>
 
-      <div class="notes">
+      <div class="recap-grid">
+        <article class="recap">
+          <h2>Configuration DNS Cloudflare</h2>
+          <p>
+            Ces enregistrements permettent de relier le domaine personnalisé à GitHub Pages.
+            Le mode <strong>Proxied</strong> signifie que le trafic passe par Cloudflare avant d’arriver
+            sur l’hébergement réel.
+          </p>
+
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Nom</th>
+              <th>Cible</th>
+              <th>Proxy</th>
+              <th>Rôle</th>
+            </tr>
+            <tr>
+              <td>CNAME</td>
+              <td>www</td>
+              <td>regalia00.github.io</td>
+              <td><span class="ok">Proxied</span></td>
+              <td>Adresse principale du site</td>
+            </tr>
+            <tr>
+              <td>CNAME</td>
+              <td>@</td>
+              <td>regalia00.github.io</td>
+              <td><span class="ok">Proxied</span></td>
+              <td>Domaine racine</td>
+            </tr>
+            <tr>
+              <td>CNAME</td>
+              <td>xena</td>
+              <td>regalia00.github.io</td>
+              <td><span class="ok">Proxied</span></td>
+              <td>Sous-domaine utilisé pour la redirection</td>
+            </tr>
+            <tr>
+              <td>CNAME</td>
+              <td>xyz</td>
+              <td>regalia00.github.io</td>
+              <td><span class="ok">Proxied</span></td>
+              <td>Sous-domaine utilisé pour la redirection</td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="recap">
+          <h2>Règles WAF / sécurité</h2>
+          <p>
+            Les règles WAF permettent à Cloudflare d’analyser les requêtes HTTP avant GitHub Pages.
+            Elles servent à bloquer, filtrer ou demander une vérification selon des conditions précises.
+          </p>
+
+          <table>
+            <tr>
+              <th>Objectif</th>
+              <th>Condition</th>
+              <th>Action</th>
+              <th>Résultat attendu</th>
+            </tr>
+            <tr>
+              <td>Bloquer page2.html</td>
+              <td>URI Path equals /page2.html</td>
+              <td>Block</td>
+              <td>La page est inaccessible sans exception.</td>
+            </tr>
+            <tr>
+              <td>Géoblocage</td>
+              <td>Country equals United States AND URI Path equals /page1.html</td>
+              <td>Block</td>
+              <td>Les IP américaines ne peuvent pas accéder à page1.html.</td>
+            </tr>
+            <tr>
+              <td>Filtrage Chrome</td>
+              <td>User-Agent contains Chrome</td>
+              <td>Block</td>
+              <td>Les navigateurs basés sur Chrome sont bloqués.</td>
+            </tr>
+            <tr>
+              <td>Challenge Belgique + Chrome</td>
+              <td>Country equals Belgium AND User-Agent contains Chrome AND URI Path equals /page2.html</td>
+              <td>Managed Challenge</td>
+              <td>L’utilisateur doit résoudre un challenge avant l’accès.</td>
+            </tr>
+            <tr>
+              <td>Filtrage par cookie</td>
+              <td>URI Path equals /page2.html AND NOT Cookie contains superadmin=yes</td>
+              <td>Block</td>
+              <td>Sans le cookie attendu, l’accès est refusé.</td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="recap">
+          <h2>Règles de redirection</h2>
+          <p>
+            Les redirections sont configurées dans Cloudflare afin de renvoyer automatiquement certaines
+            URLs vers une autre destination. Elles utilisent des codes HTTP, notamment le code 301 pour
+            une redirection permanente.
+          </p>
+
+          <table>
+            <tr>
+              <th>Source</th>
+              <th>Destination</th>
+              <th>Type</th>
+              <th>Détail important</th>
+            </tr>
+            <tr>
+              <td>www.thibault-esr-itscm.xyz/recherche.html</td>
+              <td>https://google.be</td>
+              <td>301</td>
+              <td>La page n’existe pas réellement sur GitHub Pages.</td>
+            </tr>
+            <tr>
+              <td>xena.thibault-esr-itscm.xyz/*</td>
+              <td>www.thibault-esr-itscm.xyz/*</td>
+              <td>301</td>
+              <td>L’URI est conservée pendant la redirection.</td>
+            </tr>
+            <tr>
+              <td>xyz.thibault-esr-itscm.xyz/*</td>
+              <td>www.thibault-esr-itscm.xyz/*</td>
+              <td>301</td>
+              <td>Une seule règle gère les deux sous-domaines.</td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="recap">
+          <h2>Tests réalisés</h2>
+          <p>
+            Ces tests servent à vérifier que la configuration fonctionne et à remplacer certaines captures
+            d’écran par une preuve claire de compréhension.
+          </p>
+
+          <table>
+            <tr>
+              <th>Test</th>
+              <th>Méthode</th>
+              <th>Résultat attendu</th>
+            </tr>
+            <tr>
+              <td>Vérification des nameservers</td>
+              <td>nslookup avec type NS</td>
+              <td>conrad.ns.cloudflare.com et lorna.ns.cloudflare.com</td>
+            </tr>
+            <tr>
+              <td>Accès au site principal</td>
+              <td>https://www.thibault-esr-itscm.xyz</td>
+              <td>Affichage de index.html via GitHub Pages</td>
+            </tr>
+            <tr>
+              <td>Proxy Cloudflare</td>
+              <td>Vérification du mode Proxied</td>
+              <td>Le trafic passe par Cloudflare avant GitHub Pages</td>
+            </tr>
+            <tr>
+              <td>Cookie superadmin</td>
+              <td>document.cookie="superadmin=yes"</td>
+              <td>L’accès protégé est autorisé lorsque le cookie est présent</td>
+            </tr>
+            <tr>
+              <td>Redirection sous-domaine</td>
+              <td>xena.thibault-esr-itscm.xyz/page1.html</td>
+              <td>Redirection vers www.thibault-esr-itscm.xyz/page1.html</td>
+            </tr>
+          </table>
+        </article>
+      </div>
+
+      <div class="notes" style="margin-top: 18px;">
         <article class="note">
           <h2>01 / Service de nom de domaine indisponible</h2>
           <span class="problem">Ce qui s’est passé :</span>

@@ -291,33 +291,34 @@
     }
   </style>
 </head>
+
 <body>
   <main class="layout">
     <aside class="sidebar">
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>00</span>
+        <span>01</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link" href="page1.html">
-        <span>01</span>
+        <span>02</span>
         <p>Labo Cloud Reverse Proxy</p>
       </a>
 
       <a class="nav-link" href="page2.html">
-        <span>02</span>
+        <span>03</span>
         <p>Projet</p>
       </a>
 
       <a class="nav-link active" href="page3.html">
-        <span>03</span>
+        <span>04</span>
         <p>Théorie</p>
       </a>
 
       <a class="nav-link" href="page4.html">
-        <span>04</span>
+        <span>05</span>
         <p>Notes techniques</p>
       </a>
     </aside>
@@ -334,14 +335,13 @@
 
       <div class="intro">
         <p>
-          Cette page rassemble les notions théoriques importantes du laboratoire, sans refaire
-          toutes les étapes pratiques. L’objectif est de garder les idées principales : ce que fait
-          Cloudflare, ce qu’est un reverse proxy, pourquoi le DNS est important et comment le WAF
-          peut contrôler l’accès au site.
+          Cette page regroupe les notions théoriques importantes rencontrées pendant le laboratoire.
+          Elle ne reprend pas toutes les manipulations pas à pas, mais explique les concepts nécessaires
+          pour comprendre le fonctionnement global du projet.
         </p>
         <p>
-          Je présente ces notions avec des explications simples, comme une fiche de révision pour
-          comprendre le fonctionnement global du labo.
+          Les notions principales sont le DNS, les nameservers, les enregistrements CNAME,
+          le reverse proxy, le HTTPS, le WAF, les cookies, les User-Agents et les redirections HTTP.
         </p>
       </div>
 
@@ -349,29 +349,42 @@
         <article class="theory-card large">
           <h2>01 / Reverse Proxy</h2>
           <p>
-            Un reverse proxy est un serveur placé devant le serveur réel. Le visiteur ne contacte
-            donc pas directement l’hébergement du site : il passe d’abord par une couche intermédiaire.
+            Un reverse proxy est un serveur intermédiaire placé devant le serveur réel.
+            Dans ce labo, Cloudflare reçoit les requêtes des visiteurs avant de les transmettre
+            à GitHub Pages.
           </p>
           <p>
-            Dans ce labo, Cloudflare joue ce rôle. Cela permet de protéger le site, cacher une partie
-            de l’infrastructure et appliquer des règles avant que la requête atteigne GitHub Pages.
+            Cela permet d’ajouter une couche de contrôle entre le client et l’hébergement :
+            filtrage, HTTPS, cache, redirections et règles WAF.
           </p>
         </article>
 
         <article class="theory-card">
-          <h2>02 / DNS</h2>
+          <h2>02 / DNS & Nameservers</h2>
           <p>
             Le DNS permet de transformer un nom de domaine lisible en destination technique.
-            Sans DNS, il faudrait retenir des adresses beaucoup moins pratiques.
+            Les nameservers indiquent quel service est responsable de la zone DNS du domaine.
           </p>
           <p>
-            En changeant les nameservers, on indique que Cloudflare devient responsable de la zone DNS
-            du domaine.
+            En remplaçant les nameservers Namecheap par ceux de Cloudflare, Cloudflare devient
+            responsable de la résolution DNS du domaine.
           </p>
         </article>
 
         <article class="theory-card">
-          <h2>03 / Proxy Status</h2>
+          <h2>03 / CNAME</h2>
+          <p>
+            Un CNAME est un alias DNS. Il permet de faire pointer un nom de domaine ou un
+            sous-domaine vers un autre nom de domaine.
+          </p>
+          <p>
+            Dans ce projet, les CNAME permettent de faire pointer le domaine personnalisé vers
+            <strong>regalia00.github.io</strong>, qui correspond à GitHub Pages.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>04 / Proxy Status</h2>
           <table>
             <tr>
               <th>État</th>
@@ -379,36 +392,35 @@
             </tr>
             <tr>
               <td>Nuage orange</td>
-              <td>Cloudflare agit comme proxy et protège le trafic.</td>
+              <td>Cloudflare agit comme reverse proxy et peut appliquer les règles WAF.</td>
             </tr>
             <tr>
               <td>Nuage gris</td>
-              <td>Cloudflare gère seulement le DNS, sans filtrer le trafic web.</td>
+              <td>Cloudflare gère seulement le DNS, sans filtrer le trafic HTTP/HTTPS.</td>
             </tr>
           </table>
           <p class="mini">
-            Le nuage orange est donc le mode important pour profiter du reverse proxy.
+            Le nuage orange est indispensable pour que le WAF puisse agir.
           </p>
         </article>
 
         <article class="theory-card">
-          <h2>04 / HTTPS & SSL/TLS</h2>
+          <h2>05 / HTTPS & SSL/TLS</h2>
           <p>
-            HTTPS sert à chiffrer les échanges entre le navigateur et le site. Le certificat permet
-            au navigateur de vérifier qu’il communique avec le bon service.
+            HTTPS chiffre les échanges entre le navigateur et le site. Le protocole SSL/TLS
+            garantit la confidentialité et l’intégrité des données échangées.
           </p>
           <p>
-            Dans le labo, Cloudflare facilite cette partie en ajoutant une couche de sécurité visible
-            par le cadenas du navigateur.
+            Cloudflare facilite cette partie en fournissant une couche HTTPS visible par le cadenas
+            dans le navigateur.
           </p>
         </article>
 
         <article class="theory-card large">
-          <h2>05 / Règles WAF importantes</h2>
+          <h2>06 / WAF Cloudflare</h2>
           <p>
-            Le WAF fonctionne avec une logique simple : si une condition correspond à la requête,
-            alors Cloudflare applique une action. Cela permet de bloquer, autoriser ou vérifier
-            certains visiteurs.
+            Un WAF, ou Web Application Firewall, analyse les requêtes HTTP avant qu’elles atteignent
+            le serveur web. Il peut bloquer, défier ou laisser passer une requête selon des critères.
           </p>
           <table>
             <tr>
@@ -419,78 +431,86 @@
             <tr>
               <td>URI Path</td>
               <td>Filtrer une page précise</td>
-              <td>Bloquer une page sensible</td>
-            </tr>
-            <tr>
-              <td>IP Source</td>
-              <td>Filtrer une adresse IP</td>
-              <td>Bloquer une IP abusive</td>
+              <td>Bloquer /page2.html</td>
             </tr>
             <tr>
               <td>Country</td>
-              <td>Filtrer selon le pays</td>
-              <td>Autoriser ou bloquer une zone géographique</td>
+              <td>Filtrer selon le pays de l’adresse IP</td>
+              <td>Bloquer les IP américaines</td>
             </tr>
             <tr>
               <td>User-Agent</td>
-              <td>Identifier navigateur ou outil</td>
-              <td>Détecter certains bots ou scanners</td>
+              <td>Identifier navigateur, bot ou outil</td>
+              <td>Détecter Chrome, curl ou sqlmap</td>
             </tr>
             <tr>
               <td>Cookie</td>
-              <td>Filtrer selon une valeur stockée côté navigateur</td>
-              <td>Créer une exception pour un utilisateur précis</td>
+              <td>Lire une valeur envoyée par le navigateur</td>
+              <td>Autoriser superadmin=yes</td>
             </tr>
           </table>
         </article>
 
         <article class="theory-card">
-          <h2>06 / Actions possibles</h2>
-          <table>
-            <tr>
-              <th>Action</th>
-              <th>Effet</th>
-            </tr>
-            <tr>
-              <td>Allow</td>
-              <td>Autorise la requête.</td>
-            </tr>
-            <tr>
-              <td>Block</td>
-              <td>Refuse directement l’accès.</td>
-            </tr>
-            <tr>
-              <td>Challenge</td>
-              <td>Demande une vérification humaine.</td>
-            </tr>
-            <tr>
-              <td>JS Challenge</td>
-              <td>Vérifie le comportement du navigateur.</td>
-            </tr>
-          </table>
-        </article>
-
-        <article class="theory-card">
-          <h2>07 / Rate Limiting</h2>
+          <h2>07 / Ordre des règles</h2>
           <p>
-            Le Rate Limiting permet de limiter le nombre de requêtes venant d’une même source
-            pendant une période donnée.
+            L’ordre des règles est très important. Cloudflare les évalue de haut en bas.
+            Une règle trop générale placée trop haut peut bloquer une règle plus précise.
           </p>
           <p>
-            Cette notion est utile pour comprendre comment on peut réduire les comportements abusifs,
-            comme le flood, le spam ou certaines tentatives de brute force.
+            Par exemple, une règle qui bloque tous les navigateurs Chrome peut empêcher une autre
+            règle d’autoriser les utilisateurs belges utilisant Chrome.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>08 / Cookies</h2>
+          <p>
+            Un cookie est une donnée stockée côté navigateur et envoyée automatiquement dans les
+            requêtes HTTP. Il peut contenir une valeur servant à identifier une session ou un rôle.
+          </p>
+          <p>
+            Dans le labo, le cookie <strong>superadmin=yes</strong> a été créé manuellement avec
+            JavaScript via les Developer Tools.
+          </p>
+          <p class="mini">
+            Un cookie créé côté client peut être falsifié. Dans un vrai site, il doit être généré
+            et signé par le serveur.
           </p>
         </article>
 
         <article class="theory-card terminal">
-          <h2>08 / Redirections</h2>
+          <h2>09 / Redirections HTTP</h2>
           <p>
-            Le reverse proxy peut aussi servir à rediriger un visiteur vers une autre URL.
-            Cela montre que Cloudflare peut agir avant même que la requête arrive sur l’hébergement.
+            Une redirection HTTP indique au navigateur qu’il doit aller vers une autre URL.
+            Cloudflare peut générer cette redirection avant que la requête n’atteigne GitHub Pages.
           </p>
           <p>
-            Ce mécanisme repose notamment sur les statuts HTTP et les headers de redirection.
+            Dans le labo, les redirections permanentes utilisent le code HTTP 301 et le header
+            Location.
           </p>
+        </article>
+
+        <article class="theory-card">
+          <h2>10 / DNS ≠ Redirection</h2>
+          <p>
+            Le DNS sert à indiquer vers quel service envoyer une requête. Une redirection HTTP,
+            elle, indique au navigateur de changer d’URL.
+          </p>
+          <table>
+            <tr>
+              <th>Élément</th>
+              <th>Rôle</th>
+            </tr>
+            <tr>
+              <td>DNS</td>
+              <td>Résout un nom de domaine vers une destination.</td>
+            </tr>
+            <tr>
+              <td>Redirection</td>
+              <td>Renvoie le navigateur vers une autre URL.</td>
+            </tr>
+          </table>
         </article>
       </div>
 
@@ -510,8 +530,12 @@
             <p>Les règles filtrent les requêtes avant l’hébergement.</p>
           </div>
           <div class="flow-step">
-            <strong>HTTPS</strong>
-            <p>Les échanges sont chiffrés et plus sûrs.</p>
+            <strong>Cookies</strong>
+            <p>Ils peuvent être utilisés pour créer des règles d’accès.</p>
+          </div>
+          <div class="flow-step">
+            <strong>Redirection</strong>
+            <p>Cloudflare peut renvoyer une URL vers une autre destination.</p>
           </div>
         </div>
       </section>
