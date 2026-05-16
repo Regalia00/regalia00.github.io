@@ -250,33 +250,34 @@
     }
   </style>
 </head>
+
 <body>
   <main class="layout">
     <aside class="sidebar">
       <h2>Navigation</h2>
 
       <a class="nav-link" href="index.html">
-        <span>00</span>
+        <span>01</span>
         <p>Accueil</p>
       </a>
 
       <a class="nav-link" href="page1.html">
-        <span>01</span>
+        <span>02</span>
         <p>Labo Cloud Reverse Proxy</p>
       </a>
 
       <a class="nav-link" href="page2.html">
-        <span>02</span>
+        <span>03</span>
         <p>Projet</p>
       </a>
 
       <a class="nav-link" href="page3.html">
-        <span>03</span>
+        <span>04</span>
         <p>Théorie</p>
       </a>
 
       <a class="nav-link active" href="page4.html">
-        <span>04</span>
+        <span>05</span>
         <p>Notes techniques</p>
       </a>
     </aside>
@@ -293,84 +294,236 @@
 
       <div class="intro">
         <p>
-          Cette page sert de carnet technique pour garder une trace des problèmes rencontrés,
-          des tests réalisés et des solutions trouvées pendant le laboratoire.
+          Cette page reprend les problèmes concrets rencontrés pendant le laboratoire. Elle ne présente
+          pas seulement ce qui a fonctionné, mais aussi les erreurs, les hésitations et les imprévus qui
+          ont permis de mieux comprendre le fonctionnement réel de Cloudflare, du DNS, de GitHub Pages
+          et du WAF.
         </p>
         <p>
-          L’objectif est surtout de comprendre les erreurs et les comportements du réseau plutôt
-          que simplement suivre un tutoriel sans analyser ce qui se passe.
+          Le labo paraissait assez linéaire sur papier, mais en pratique plusieurs étapes ont demandé
+          de l’analyse : trouver une alternative pour le nom de domaine, attendre la propagation DNS,
+          comprendre les règles Cloudflare, corriger les conflits WAF et adapter les redirections.
         </p>
       </div>
 
       <div class="notes">
         <article class="note">
-          <h2>01 / Propagation DNS</h2>
-          <span class="problem">Problème observé :</span>
+          <h2>01 / Le service de domaine prévu ne convenait pas</h2>
+          <span class="problem">Ce qui s’est passé :</span>
           <p>
-            Après le changement des nameservers vers Cloudflare, le domaine ne répondait pas immédiatement.
-            Certaines requêtes utilisaient encore les anciens DNS.
+            Le labo proposait un service pour obtenir un nom de domaine, mais celui-ci n’était pas
+            vraiment utilisable dans mon cas. Au lieu de bloquer sur cette étape, il a fallu trouver
+            une autre solution rapidement.
           </p>
 
-          <span class="solution">Compréhension :</span>
+          <span class="solution">Ce que j’ai fait :</span>
           <p>
-            Les serveurs DNS gardent des informations en cache pendant un certain temps.
-            La propagation peut donc prendre plusieurs minutes ou plusieurs heures.
-          </p>
-        </article>
-
-        <article class="note">
-          <h2>02 / HTTPS non actif</h2>
-          <span class="problem">Problème observé :</span>
-          <p>
-            Le site fonctionnait mais sans cadenas HTTPS juste après l’ajout du domaine personnalisé.
-          </p>
-
-          <span class="solution">Compréhension :</span>
-          <p>
-            Cloudflare et GitHub doivent générer les certificats SSL/TLS.
-            Cette étape demande parfois un délai avant l’activation complète.
+            J’ai choisi Namecheap pour acheter le domaine <strong>thibault-esr-itscm.xyz</strong>.
+            Ce n’était pas exactement ce qui était prévu dans le labo, mais le résultat attendu reste
+            le même : disposer d’un vrai nom de domaine que je peux relier à Cloudflare.
           </p>
         </article>
 
         <article class="note">
-          <h2>03 / Mauvaise configuration DNS</h2>
-          <span class="problem">Problème observé :</span>
+          <h2>02 / Validation ICANN après l’achat</h2>
+          <span class="problem">Ce qui m’a surpris :</span>
           <p>
-            Une erreur de configuration CNAME empêchait le domaine de pointer correctement vers le site.
+            Après l’achat du domaine, il fallait valider les informations de contact. Au début, ce n’était
+            pas clair si cette étape était importante ou non.
           </p>
 
-          <span class="solution">Compréhension :</span>
+          <span class="solution">Ce que j’ai compris :</span>
           <p>
-            Le DNS doit rester cohérent entre Cloudflare et GitHub Pages.
-            Une petite erreur dans les records peut empêcher le chargement du site.
+            Cette validation est obligatoire pour confirmer que le propriétaire du domaine est joignable.
+            Si elle n’est pas faite, le domaine peut être suspendu. Ce n’est donc pas une simple formalité :
+            c’est une étape nécessaire pour garder le domaine actif.
           </p>
         </article>
 
         <article class="note">
-          <h2>04 / Compréhension du Reverse Proxy</h2>
-          <span class="problem">Point important :</span>
+          <h2>03 / Propagation DNS pas immédiate</h2>
+          <span class="problem">Ce qui s’est passé :</span>
           <p>
-            Au début, il était difficile de visualiser le rôle exact du reverse proxy dans le projet.
+            Après avoir remplacé les nameservers Namecheap par ceux de Cloudflare, je m’attendais à voir
+            le changement directement. Pourtant, avec <strong>nslookup</strong>, les anciens DNS
+            apparaissaient encore.
           </p>
 
-          <span class="solution">Compréhension :</span>
+          <span class="solution">Ce que j’ai compris :</span>
           <p>
-            Le reverse proxy agit comme une couche intermédiaire entre le visiteur et l’hébergement.
-            Cela permet à Cloudflare de filtrer, protéger et analyser le trafic avant qu’il atteigne GitHub Pages.
+            La configuration était correcte, mais Internet ne se met pas à jour instantanément.
+            Les DNS sont mis en cache à plusieurs endroits, ce qui explique le délai. Il fallait simplement
+            attendre que la propagation se termine avant de retester.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>04 / GitHub Pages affichait une erreur 404</h2>
+          <span class="problem">Ce qui s’est passé :</span>
+          <p>
+            Au début, le site GitHub Pages ne s’affichait pas et renvoyait une erreur 404. Ce n’était pas
+            très parlant, car le fichier HTML existait bien.
+          </p>
+
+          <span class="solution">Ce que j’ai corrigé :</span>
+          <p>
+            Le problème venait de la configuration GitHub Pages et du nom du repository. Pour un site
+            utilisateur GitHub Pages, le repository devait correspondre au format attendu :
+            <strong>regalia00.github.io</strong>. Une fois le bon repository utilisé et GitHub Pages activé,
+            le site a commencé à fonctionner.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>05 / Notepad++ et GitHub Web</h2>
+          <span class="problem">Différence avec le labo :</span>
+          <p>
+            Le labo demandait de créer les pages HTML avec Notepad++. Au départ, certaines modifications
+            ont été faites directement depuis l’interface web de GitHub, ce qui fonctionnait, mais ne suivait
+            pas exactement la méthode demandée.
+          </p>
+
+          <span class="solution">Ce que j’ai retenu :</span>
+          <p>
+            Techniquement, les deux méthodes fonctionnent, mais l’objectif du labo était aussi de comprendre
+            la création locale des fichiers HTML. J’ai donc repris la logique avec Notepad++ puis l’envoi
+            des fichiers vers GitHub.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>06 / Proxy Cloudflare activé trop tôt ou trop tard</h2>
+          <span class="problem">Point délicat :</span>
+          <p>
+            Pour que GitHub valide correctement le domaine personnalisé, le proxy Cloudflare devait d’abord
+            rester désactivé, c’est-à-dire en mode <strong>DNS only</strong> avec le nuage gris.
+          </p>
+
+          <span class="solution">Ce que j’ai compris :</span>
+          <p>
+            La bonne logique est : créer le CNAME, laisser le proxy désactivé, configurer le custom domain
+            dans GitHub Pages, attendre la validation, puis revenir dans Cloudflare pour activer le proxy
+            orange. À partir de ce moment, Cloudflare devient vraiment le reverse proxy.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>07 / Mauvaise configuration DNS</h2>
+          <span class="problem">Ce qui s’est passé :</span>
+          <p>
+            À un moment, une erreur dans les enregistrements DNS a rendu le site inaccessible. Cela montre
+            qu’une petite erreur dans un CNAME ou dans le proxy status peut casser tout l’accès au site.
+          </p>
+
+          <span class="solution">Ce que j’ai corrigé :</span>
+          <p>
+            Les enregistrements ont été vérifiés et corrigés pour faire pointer
+            <strong>www.thibault-esr-itscm.xyz</strong> et le domaine racine vers
+            <strong>regalia00.github.io</strong>. Une fois les records DNS cohérents, le site a de nouveau
+            répondu correctement.
           </p>
         </article>
 
         <article class="note terminal">
-          <h2>05 / Tests WAF</h2>
+          <h2>08 / Règles WAF plus compliquées que prévu</h2>
+          <span class="problem">Ce qui a été difficile :</span>
           <p>
-            Plusieurs règles ont été testées afin de comprendre comment Cloudflare réagit selon les conditions.
+            Créer les règles Cloudflare n’était pas aussi simple que prévu. Il fallait choisir le bon champ,
+            le bon opérateur, la bonne action et surtout comprendre dans quel ordre les règles étaient lues.
           </p>
-          <ul>
-            <li>Blocage par URI Path</li>
-            <li>Filtrage User-Agent</li>
-            <li>Challenge CAPTCHA</li>
-            <li>Blocage par pays</li>
-          </ul>
+
+          <span class="solution">Ce que j’ai compris :</span>
+          <p>
+            Une règle WAF fonctionne comme une condition : si la requête correspond, Cloudflare applique
+            l’action. Par exemple, <strong>URI Path equals /page2.html</strong> permet de cibler précisément
+            une page. Il faut donc bien réfléchir à la logique avant de créer la règle.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>09 / Conflit entre règles Cloudflare</h2>
+          <span class="problem">Erreur rencontrée :</span>
+          <p>
+            Une règle bloquait tous les navigateurs Chrome, alors qu’une autre règle devait justement
+            autoriser certains utilisateurs Chrome belges avec un challenge. Les deux règles se contredisaient.
+          </p>
+
+          <span class="solution">Ce que j’ai appris :</span>
+          <p>
+            L’ordre et la logique des règles sont essentiels. Une règle trop générale peut empêcher une
+            règle plus précise de fonctionner. Il faut donc placer les exceptions avant les blocages généraux
+            ou désactiver les règles qui entrent en conflit.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>10 / Filtrage par cookie</h2>
+          <span class="problem">Ce qui posait question :</span>
+          <p>
+            Le labo demandait de filtrer sur base d’un cookie <strong>superadmin=yes</strong>, mais le site
+            étant statique, il n’y avait aucun serveur capable de créer automatiquement ce cookie.
+          </p>
+
+          <span class="solution">Ce que j’ai fait :</span>
+          <p>
+            Le cookie a été créé manuellement depuis les Developer Tools du navigateur avec la commande :
+          </p>
+          <pre>document.cookie="superadmin=yes"</pre>
+          <p>
+            Ensuite, une règle Cloudflare a été créée pour bloquer l’accès à une page si ce cookie n’était
+            pas présent. Cela montre bien que Cloudflare peut lire les cookies envoyés dans les requêtes HTTP.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>11 / Sécurité réelle des cookies</h2>
+          <span class="problem">Limite importante :</span>
+          <p>
+            En créant le cookie manuellement, on voit directement qu’un cookie côté client peut être modifié
+            par l’utilisateur. Ce n’est donc pas une vraie authentification sécurisée.
+          </p>
+
+          <span class="solution">Ce que j’ai retenu :</span>
+          <p>
+            Dans ce labo, le cookie sert surtout à comprendre le principe. Dans un vrai site, un cookie
+            d’authentification devrait être généré par le serveur, signé, protégé et lié à une vraie session.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>12 / Redirection des sous-domaines</h2>
+          <span class="problem">Ce qui était piégeux :</span>
+          <p>
+            La consigne demandait de rediriger les sous-domaines <strong>xena</strong> et <strong>xyz</strong>
+            vers <strong>www</strong>, tout en conservant l’URI. Il ne fallait donc pas simplement rediriger
+            vers la page d’accueil.
+          </p>
+
+          <span class="solution">Solution appliquée :</span>
+          <p>
+            Une règle de redirection dynamique a été utilisée dans Cloudflare :
+          </p>
+          <pre>concat("https://www.thibault-esr-itscm.xyz", http.request.uri.path)</pre>
+          <p>
+            Grâce à cela, une URL comme <strong>xena.thibault-esr-itscm.xyz/page1.html</strong>
+            redirige bien vers <strong>www.thibault-esr-itscm.xyz/page1.html</strong>.
+          </p>
+        </article>
+
+        <article class="note">
+          <h2>13 / Ancienne syntaxe de redirection non valide</h2>
+          <span class="problem">Ce qui s’est passé :</span>
+          <p>
+            La syntaxe simple avec une variable comme <strong>${uri}</strong> ne fonctionnait pas dans
+            l’interface moderne de Cloudflare.
+          </p>
+
+          <span class="solution">Ce que j’ai compris :</span>
+          <p>
+            Cloudflare utilise maintenant son propre langage d’expression pour certaines règles.
+            Il faut donc utiliser des variables comme <strong>http.request.uri.path</strong> et une fonction
+            comme <strong>concat()</strong> pour reconstruire dynamiquement l’URL finale.
+          </p>
         </article>
       </div>
 
@@ -380,13 +533,15 @@
         <pre>nslookup
 server 9.9.9.9
 set type=NS
-example.xyz</pre>
-
-        <pre>ping example.xyz</pre>
-
-        <pre>curl -I https://example.xyz</pre>
+thibault-esr-itscm.xyz</pre>
 
         <pre>ipconfig /flushdns</pre>
+
+        <pre>curl -I https://www.thibault-esr-itscm.xyz</pre>
+
+        <pre>document.cookie="superadmin=yes"</pre>
+
+        <pre>concat("https://www.thibault-esr-itscm.xyz", http.request.uri.path)</pre>
       </section>
     </section>
   </main>
