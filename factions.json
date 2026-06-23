@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nom": "Garde de garde"
+  },
+  {
+    "id": 2,
+    "nom": "Trône du Nord"
+  },
+  {
+    "id": 3,
+    "nom": "Conseil du cauchemar"
+  },
+  {
+    "id": 4,
+    "nom": "Culte Maudit"
+  },
+  {
+    "id": 5,
+    "nom": "Infernal Blast"
+  },
+  {
+    "id": 6,
+    "nom": "Piercer Star"
+  },
+  {
+    "id": 7,
+    "nom": "Ordre d'Esoteria"
+  },
+  {
+    "id": 8,
+    "nom": "Dominion du chaos"
+  },
+  {
+    "id": 9,
+    "nom": "Arbitres Suprêmes"
+  },
+  {
+    "id": 10,
+    "nom": "Innomable"
+  }
+]
