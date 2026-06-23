@@ -1,2 +1,124 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Watcher of Realm - Héros</title><link rel="stylesheet" href="css/style.css"></head><body><header class="topbar"><a class="brand" href="index.html">Watcher<br>of Realm</a><nav><a href="index.html">Accueil</a><a class="active" href="heros.html">Héros</a><a href="#">Monstres</a><a href="#">Équipements</a><a href="#">Donjons</a><a href="#">Stratégies</a><a href="#">Guides</a></nav></header><main class="page"><section class="filter-panel"><div class="filter-head"><h1>Filtrer la liste</h1><div class="search-zone"><input id="searchInput" type="search" placeholder="Rechercher un héros..."><button class="sort active" data-sort="added">Ajouté</button><button class="sort" data-sort="az">A-Z</button><button class="sort" data-sort="rarete">Rareté</button><button class="sort" data-sort="eval">Évaluation</button><strong><span id="heroCount">0</span> HÉROS</strong></div></div><div class="filters-grid"><div><h2>Classe</h2><div id="classFilters" class="pill-group"></div></div><div><h2>Rareté & Source</h2><div id="rarityFilters" class="pill-group"></div><div id="sourceFilters" class="pill-group"></div></div><div><h2>Factions</h2><div id="factionFilters" class="pill-group factions"></div></div></div></section><section id="heroesGrid" class="heroes-grid"></section></main><template id="heroTemplate"><article class="hero-card"><div class="hero-image">?</div><div class="hero-content"><h3></h3><p class="meta"></p><p class="score"></p><div class="notes"></div><a class="button" href="#">Voir la fiche</a></div></article></template><script src="js/heros.js"></script></body></html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watcher of Realm - Héros</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <a class="brand" href="index.html">
+        Watcher<br>of Realm
+    </a>
+
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a class="active" href="heros.html">Héros</a>
+        <a href="#">Monstres</a>
+        <a href="#">Équipements</a>
+        <a href="#">Donjons</a>
+        <a href="#">Stratégies</a>
+        <a href="#">Guides</a>
+    </nav>
+</header>
+
+<main class="page">
+
+    <aside class="narrateur">
+        <img src="images/narrateur.png" alt="Narrateur">
+
+        <h2>Le Narrateur</h2>
+
+        <p>
+            Commandant, les archives de Tya sont ouvertes.
+            Parcourez les héros, découvrez leurs forces,
+            leurs factions et leurs rôles dans la guerre
+            contre les ténèbres.
+        </p>
+    </aside>
+
+    <section class="hero-section">
+
+        <div class="hero-header">
+            <h1>Archives des héros</h1>
+
+            <div class="search-zone">
+                <input id="searchInput"
+                       type="search"
+                       placeholder="Rechercher un héros...">
+
+                <span id="heroCount">0 héros</span>
+            </div>
+        </div>
+
+        <div class="filter-box">
+
+            <h3>Classe</h3>
+            <div id="classFilters" class="pill-group"></div>
+
+            <h3>Rareté</h3>
+            <div id="rarityFilters" class="pill-group"></div>
+
+            <h3>Faction</h3>
+            <div id="factionFilters" class="pill-group"></div>
+
+        </div>
+
+        <div class="sort-box">
+            <button class="sort active" data-sort="added">
+                Ajouté
+            </button>
+
+            <button class="sort" data-sort="az">
+                A-Z
+            </button>
+
+            <button class="sort" data-sort="eval">
+                Évaluation
+            </button>
+        </div>
+
+        <section id="heroesGrid" class="heroes-grid">
+
+        </section>
+
+    </section>
+
+</main>
+
+<template id="heroTemplate">
+
+    <article class="hero-card">
+
+        <div class="hero-image">
+            <img src="images/heros/default.webp" alt="">
+        </div>
+
+        <div class="hero-content">
+
+            <h3></h3>
+
+            <p class="meta"></p>
+
+            <p class="score"></p>
+
+            <div class="notes"></div>
+
+            <a class="button" href="#">
+                Voir la fiche
+            </a>
+
+        </div>
+
+    </article>
+
+</template>
+
+<script src="JS/heros.js"></script>
+
+</body>
+</html>
