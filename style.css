@@ -246,3 +246,85 @@ footer {
         max-width: 85%;
     }
 }
+/* PAGE HÉROS */
+
+.heroes-page {
+    width: 96%;
+    max-width: 1600px;
+    margin: 30px auto;
+}
+
+.hero-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.hero-header input {
+    width: 320px;
+    padding: 12px 18px;
+    background: #111;
+    border: 1px solid #8b682f;
+    color: #e7d7b1;
+}
+
+.hero-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pill {
+    padding: 9px 16px;
+    border: 1px solid #8b682f;
+    background: rgba(20,20,20,0.9);
+    color: #d9bd78;
+    cursor: pointer;
+}
+
+.pill.active,
+.pill:hover {
+    background: #8b682f;
+    color: white;
+}
+
+.heroes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.hero-card {
+    border: 1px solid #8b682f;
+    background: #111;
+    padding: 18px;
+}
+
+.hero-card h3 {
+    color: #d9bd78;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.hero-card .meta {
+    color: #cbb98d;
+    margin-bottom: 10px;
+}
+
+.hero-card .score {
+    color: #f0c96c;
+    font-size: 20px;
+}
+
+.hero-card .button {
+    display: inline-block;
+    margin-top: 15px;
+}
