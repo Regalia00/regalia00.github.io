@@ -1,174 +1,96 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watcher of Realm</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="topbar">
-
-    <div class="brand">
-        WATCHER<br>
-        OF REALM
-    </div>
+    <a class="brand" href="index.html">
+        WATCHER<br>OF REALM
+    </a>
 
     <nav>
         <a class="active" href="index.html">Accueil</a>
         <a href="Heros.html">Héros</a>
-        <a href="monstres.html">Monstres</a>
-        <a href="donjons.html">Donjons</a>
-        <a href="equipements.html">Équipements</a>
-        <a href="guides.html">Guides</a>
+        <a href="#">Monstres</a>
+        <a href="#">Donjons</a>
+        <a href="#">Équipements</a>
+        <a href="#">Guides</a>
     </nav>
-
 </header>
 
 <main class="home-grid">
 
-    <!-- Narrateur -->
-
-    <section class="panel narrateur">
-
-        <img src="images/Cartes/Actualité.png" alt="Narrateur">
-
-        <div class="content">
-            <h2>Bienvenue, Commandant</h2>
-
+    <section class="panel panel-narrateur">
+        <div class="panel-content parchment">
+            <span class="small-title">Narrateur</span>
+            <h2>Le Narrateur</h2>
             <p>
-                Je suis votre narrateur et guide dans ce royaume.
-                Ensemble nous explorerons les héros, les donjons,
-                les équipements et les stratégies.
-            </p>
-
-            <p>
-                — Le Narrateur
+                Bienvenue, commandant. Explorez les archives,
+                préparez vos héros et percez les secrets des donjons.
             </p>
         </div>
-
     </section>
 
-    <!-- Guides -->
-
-    <section class="panel guides">
-
+    <section class="panel panel-guides">
         <img src="images/Cartes/guides.png" alt="Guides">
-
-        <div class="overlay">
-
+        <div class="panel-content">
+            <span class="small-title">Guides</span>
             <h1>Guides & Conseils</h1>
-
-            <p>
-                Découvrez nos guides pour progresser dans Watcher of Realms.
-            </p>
-
-            <a class="button" href="guides.html">
-                Voir les guides
-            </a>
-
+            <p>Apprenez à progresser efficacement dans Watcher of Realms.</p>
+            <a href="#" class="btn">Explorer</a>
         </div>
-
     </section>
 
-    <!-- Héros -->
-
-    <section class="panel heros">
-
-        <img src="images/Cartes/Archive.png" alt="Archives">
-
-        <div class="overlay">
-
+    <section class="panel panel-heros">
+        <img src="images/Cartes/archive.png" alt="Archives des héros">
+        <div class="panel-content">
+            <span class="small-title">Héros</span>
             <h2>Archives des Héros</h2>
-
-            <p>
-                Consultez les statistiques, factions et évaluations.
-            </p>
-
-            <a class="button" href="Heros.html">
-                Ouvrir
-            </a>
-
+            <p>Consultez les statistiques, factions et évaluations.</p>
+            <a href="Heros.html" class="btn">Ouvrir</a>
         </div>
-
     </section>
 
-    <!-- Donjons -->
-
-    <section class="panel donjons">
-
+    <section class="panel panel-donjons">
         <img src="images/Cartes/Donjon.png" alt="Donjons">
-
-        <div class="overlay">
-
+        <div class="panel-content">
+            <span class="small-title">Donjons</span>
             <h2>Donjons</h2>
-
-            <p>
-                Boss, stratégies et récompenses.
-            </p>
-
-            <a class="button" href="donjons.html">
-                Explorer
-            </a>
-
+            <p>Boss, mécaniques, compositions et récompenses.</p>
+            <a href="#" class="btn">Explorer</a>
         </div>
-
     </section>
 
-    <!-- Équipements -->
-
-    <section class="panel equipements">
-
-        <img src="images/Cartes/Équipement.png" alt="Équipements">
-
-        <div class="overlay">
-
+    <section class="panel panel-equipements">
+        <img src="images/Cartes/equipment.png" alt="Équipements">
+        <div class="panel-content">
+            <span class="small-title">Équipements</span>
             <h2>Équipements</h2>
-
-            <p>
-                Découvrez les meilleurs ensembles et statistiques.
-            </p>
-
-            <a class="button" href="equipements.html">
-                Voir
-            </a>
-
+            <p>Sets, statistiques prioritaires et artefacts.</p>
+            <a href="#" class="btn">Voir</a>
         </div>
-
     </section>
 
-    <!-- Actualités -->
-
-    <section class="panel actualites">
-
-        <h2>Actualités</h2>
-
-        <div class="news-card">
-            Événements à venir.
+    <section class="panel panel-actualites">
+        <img src="images/Cartes/actualite.png" alt="Actualités">
+        <div class="panel-content">
+            <span class="small-title">Actualités</span>
+            <h2>Actualités</h2>
+            <p>Dernières nouveautés, événements et mises à jour.</p>
         </div>
-
-        <div class="news-card">
-            Nouveaux héros.
-        </div>
-
-        <div class="news-card">
-            Mises à jour du jeu.
-        </div>
-
     </section>
 
 </main>
 
 <footer>
-
     Projet fan-made Watcher of Realms
-
 </footer>
 
 </body>
-
 </html>
